@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "470543150494",
+    "firebase_url": "https://connect-624de.firebaseio.com",
+    "project_id": "connect-624de",
+    "storage_bucket": "connect-624de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:470543150494:android:c632c36a08e30ae7",
+        "android_client_info": {
+          "package_name": "uk.co.mearsgroup.connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "470543150494-ftksv36r87e7lmkpg9tvchverhlms2kd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiOtdaQwqSDkKgSvHsS5Adk62X6CVTjws"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

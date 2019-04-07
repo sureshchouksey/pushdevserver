@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "569807957681",
+    "firebase_url": "https://fcmtutorial-ab499.firebaseio.com",
+    "project_id": "fcmtutorial-ab499",
+    "storage_bucket": "fcmtutorial-ab499.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569807957681:android:5dd1a04dddd7db34",
+        "android_client_info": {
+          "package_name": "com.opusneo.epmod2020.workplace.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569807957681-tpsei3kqljmu3q6b5ng7hfig8eokvarm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb-ZJl-5v-oMUb6kry5X-n_F4likGcsAg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
