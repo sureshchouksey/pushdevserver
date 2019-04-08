@@ -326,6 +326,7 @@ exports.sendNotification = (req, res) => {
                 } else if(item.packageName === opusConstant.opusConstant.mcConnectPackageNameDev){
                   adminApp = MearsDevConnectAdminApp;
                   apnProvider = new apn.Provider(opusConstant.opusConstant.optionsMCDev);
+                  console.log('apnProvider',apnProvider);
                   isPackageNameValid = true;
                 } else{
                   isPackageNameValid = false;

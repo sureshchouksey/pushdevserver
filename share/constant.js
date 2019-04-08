@@ -14,7 +14,7 @@ module.exports.opusConstant = Object.freeze({
         production: false
       },
       optionsMCDev : {  
-        pfx: "./pushConfig/Certificates.MCdev.p12",
+       // pfx: "./pushConfig/Certificates_dev.p12",
         "cert": "./pushConfig/VOIP_MCdev.pem",
         "key": "./pushConfig/VOIP_MCdev.pem",
         "passphrase": "fulcrum#1",
