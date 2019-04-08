@@ -13,6 +13,14 @@ module.exports.opusConstant = Object.freeze({
         "voip":false,
         production: false
       },
+      optionsMCDev : {  
+        pfx: "./pushConfig/Certificates.MCdev.p12",
+        "cert": "./pushConfig/VOIP_MCdev.pem",
+        "key": "./pushConfig/VOIP_MCdev.pem",
+        "passphrase": "fulcrum#1",
+        "voip":false,
+        production: false
+      },
       optionsMearsConnect : {
         // token: {
         //   cert:"./pushConfig/AuthKey_QMV7PA4VJ2.p8",

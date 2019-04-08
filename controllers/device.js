@@ -325,7 +325,7 @@ exports.sendNotification = (req, res) => {
                   isPackageNameValid = true;
                 } else if(item.packageName === opusConstant.opusConstant.mcConnectPackageNameDev){
                   adminApp = MearsDevConnectAdminApp;
-                  apnProvider = new apn.Provider(opusConstant.opusConstant.optionsMearsConnect);
+                  apnProvider = new apn.Provider(opusConstant.opusConstant.optionsMCDev);
                   isPackageNameValid = true;
                 } else{
                   isPackageNameValid = false;
@@ -647,7 +647,7 @@ exports.sendToAll = (req,res)=>{
           } else if(req.body.packageName === opusConstant.opusConstant.mcConnectPackageNameDev){
             adminApp = MearsDevConnectAdminApp;
             console.log('adminApp MearsDevConnectAdminApp')
-            apnProvider = new apn.Provider(opusConstant.opusConstant.optionsMearsConnect);
+            apnProvider = new apn.Provider(opusConstant.opusConstant.optionsMCDev);
             isPackageNameValid = true;
             
           } else{            
