@@ -1105,3 +1105,4 @@
    'c4NFUXyd6d8:APA91bGE0oKAE_0mB4EqOqVLYZyQECv2g9ubDtgc5nqR5uOQm0_HLOngDwPtXJUx-sQ11naHdKfTda2bW1yufSyaiT8bSPdTI40TraLEJgj_OaJilwnnESL485okphn2ZLzTJJaoH9La',
   username: 'test1.connect' }
 [2019-04-05T05:09:15.375] [INFO] info - Successfully sent message: { messageId: 5345968147575249000 }
+[2019-04-06T23:49:47.634] [INFO] info - Start Get Device Service
