@@ -5,14 +5,23 @@ module.exports.opusConstant = Object.freeze({
     mcConnectPackageNameProd: 'uk.co.mearsgroup.connect',
     mcConnectPackageNameDev:'uk.co.mearsgroup.connect.dev',
     firebaseURL: 'https://opus-neo.firebaseio.com',
+    // options : {  
+    //     pfx: "./pushConfig/Certificates.newvoip.p12",
+    //     "cert": "./pushConfig/VOIP.pem",
+    //     "key": "./pushConfig/VOIP.pem",
+    //     "passphrase": "fulcrum#1",
+    //     "voip":false,
+    //     production: false
+    //   },
     options : {  
-        pfx: "./pushConfig/Certificates.newvoip.p12",
-        "cert": "./pushConfig/VOIP.pem",
-        "key": "./pushConfig/VOIP.pem",
-        "passphrase": "fulcrum#1",
-        "voip":false,
-        production: false
+      token: {
+        cert:"./pushConfig/AuthKey_UNB6GM7FG5.p8",
+        key: "./pushConfig/AuthKey_UNB6GM7FG5.p8",
+        keyId: "UNB6GM7FG5",
+        teamId: "E8A8C38465"
       },
+      production: true
+    },
       optionsMearsConnect : {
         // token: {
         //   cert:"./pushConfig/AuthKey_QMV7PA4VJ2.p8",
