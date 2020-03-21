@@ -35,8 +35,10 @@ module.exports.opusConstant = Object.freeze({
         //   teamId: "24HDLHEAPL"
         // },
         //pfx: "./pushConfig/Certificates_prod.p12",
-        "cert": "./pushConfig/apns-pro-cert.pem",
-        "key": "./pushConfig/apns-pro-key.pem",
+        //"cert": "./pushConfig/apns-pro-cert.pem",
+        //"key": "./pushConfig/apns-pro-key.pem",
+        "cert": "./pushConfig/ep-apns-pro-cert.pem",
+        "key": "./pushConfig/ep-apns-pro-key.pem",
         //"ca":"./pushConfig/apns-pro.pem",
         "passphrase": "fulcrum#1",
         "voip":false,
