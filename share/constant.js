@@ -27,6 +27,14 @@ module.exports.opusConstant = Object.freeze({
         gateway: 'gateway.push.apple.com:2195',
         production: true
       },
+       options = {
+        token: {
+          key: "./pushConfig/AuthKey_3Q7LG2FM9M.p8",
+          keyId: "3Q7LG2FM9M",
+          teamId: "Q9XD7568D9"
+        },
+        production: true
+      },
       optionEpConnect : {
         token: {
           //cert:"./pushConfig/AuthKey_3Q7LG2FM9M.p8",
