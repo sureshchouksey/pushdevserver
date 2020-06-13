@@ -29,7 +29,7 @@ module.exports.opusConstant = Object.freeze({
       },
       optionEpConnect : {
         token: {
-          cert:"./pushConfig/AuthKey_3Q7LG2FM9M.p8",
+          //cert:"./pushConfig/AuthKey_3Q7LG2FM9M.p8",
           key: "./pushConfig/AuthKey_3Q7LG2FM9M.p8",
           keyId: "3Q7LG2FM9M",
           teamId: "Q9XD7568D9"
