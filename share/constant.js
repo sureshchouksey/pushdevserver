@@ -28,17 +28,17 @@ module.exports.opusConstant = Object.freeze({
         production: true
       },
       optionEpConnect : {
-        // token: {
-        //   cert:"./pushConfig/AuthKey_C552UAND2U.p8",
-        //   key: "./pushConfig/AuthKey_C552UAND2U.p8",
-        //   keyId: "C552UAND2U",
-        //   teamId: "24HDLHEAPL"
-        // },
+        token: {
+          cert:"./pushConfig/AuthKey_3Q7LG2FM9M.p8",
+          key: "./pushConfig/AuthKey_3Q7LG2FM9M.p8",
+          keyId: "3Q7LG2FM9M",
+          teamId: "Q9XD7568D9"
+        },
         //pfx: "./pushConfig/Certificates_prod.p12",
         //"cert": "./pushConfig/apns-pro-cert.pem",
         //"key": "./pushConfig/apns-pro-key.pem",
-        "cert": "./pushConfig/prod-cert.pem",
-        "key": "./pushConfig/prod-cert.pem",
+        //"cert": "./pushConfig/prod-cert.pem",
+       // "key": "./pushConfig/prod-cert.pem",
         //"ca":"./pushConfig/apns-pro.pem",
         "passphrase": "fulcrum#1",
         //"voip":false,
