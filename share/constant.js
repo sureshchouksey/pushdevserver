@@ -37,11 +37,11 @@ module.exports.opusConstant = Object.freeze({
         //pfx: "./pushConfig/Certificates_prod.p12",
         //"cert": "./pushConfig/apns-pro-cert.pem",
         //"key": "./pushConfig/apns-pro-key.pem",
-        "cert": "./pushConfig/ep-apns-pro-cert.pem",
-        "key": "./pushConfig/ep-apns-pro-key.pem",
+        "cert": "./pushConfig/cert.pem",
+        "key": "./pushConfig/key.pem",
         //"ca":"./pushConfig/apns-pro.pem",
         "passphrase": "fulcrum#1",
-        "voip":false,
+        //"voip":false,
         
         // proxy: {
         //   host: "gateway.push.apple.com",

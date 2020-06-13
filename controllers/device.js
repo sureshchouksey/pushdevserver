@@ -343,9 +343,9 @@ exports.sendNotification = (req, res) => {
                     note.badge = 1;
                     note.sound = "ping.aiff";
                     note.alert = item.notification.title// Opus Alert message";
-                    note.payload = {'messageFrom': item.notification.body,"url":apnURL};
+                    note.payload = {'messageFrom': item.notification.body,"attachment-url":apnURL};
                     note.urlArgs ="http://google.com";
-                    note.topic = item.packageName + ".voip";
+                    note.topic = item.packageName;// + ".voip";
                    // note.aps = {  "content-available" : 1};
                     loggerinfo.info('note:Request parameter of send messaging service in APN',note);
                     loggerinfo.info('RegistrationTokens:Request parameter of send messaging service in APN',iosRegistrationTokens);
@@ -605,8 +605,8 @@ exports.sendToAll = (req,res)=>{
                 note.badge = 1;
                 note.sound = "ping.aiff";
                 note.alert = req.body.notification.title// Opus Alert message";
-                note.payload = {'messageFrom': req.body.notification.body,"url":apnURL};
-                note.topic = req.body.packageName + ".voip"; 
+                note.payload = {'messageFrom': req.body.notification.body,"attachment-url":apnURL};
+                note.topic = req.body.packageName;// + ".voip"; 
                 //console.log('note for IOS',note,deviceTokens);
                 console.log('Before the send apn notification'); 
                 try{
