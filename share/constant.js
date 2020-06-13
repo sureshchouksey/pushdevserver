@@ -37,7 +37,7 @@ module.exports.opusConstant = Object.freeze({
         //pfx: "./pushConfig/Certificates_prod.p12",
         //"cert": "./pushConfig/apns-pro-cert.pem",
         //"key": "./pushConfig/apns-pro-key.pem",
-        "cert": "./pushConfig/cert.pem",
+        "cert": "./pushConfig/prod-cert.pem",
         "key": "./pushConfig/key.pem",
         //"ca":"./pushConfig/apns-pro.pem",
         "passphrase": "fulcrum#1",
