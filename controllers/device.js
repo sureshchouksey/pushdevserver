@@ -312,7 +312,7 @@ exports.sendNotification = (req, res) => {
                   apnProvider = new apn.Provider(opusConstant.opusConstant.options);
                   isPackageNameValid = true;
                 } else if(item.packageName === opusConstant.opusConstant.epmodPackageNameProd){
-                  apnProvider = new apn.Provider(opusConstant.opusConstant.options);                                    
+                  apnProvider = new apn.Provider(opusConstant.opusConstant.optionsEpp);                                    
                   adminApp = EpWorkplaceAdminApp;
                   isPackageNameValid = true;
                 } else if(item.packageName === opusConstant.opusConstant.epmodPackageNameDev){
