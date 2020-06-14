@@ -130,7 +130,7 @@ exports.home = (req,res) =>{
 
 exports.update = (req, res) => {
   try{
-    loggerinfo.info('Start Create and Update Registration Service');
+    loggerinfo.info('Start Create and Update Registration Service'+req.body);
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if(req.body && req.body.hasOwnProperty('platform')  && req.body.hasOwnProperty('deviceId') && req.body.hasOwnProperty('packageName') && req.body.hasOwnProperty('registrationToken') && req.body.hasOwnProperty('packageName'))
     {
@@ -301,6 +301,8 @@ exports.sendNotification = (req, res) => {
                         androidRegistrationTokens.push(device.registrationToken);
                     }
                     if(device.platform === 'iOS'){
+                      loggerinfo.info('device.registrationToken --- > ' +iosRegistrationTokens);
+
                       iosRegistrationTokens.push(device.registrationToken);            
                     }
                 })        
