@@ -130,7 +130,7 @@ exports.home = (req,res) =>{
 
 exports.update = (req, res) => {
   try{
-    loggerinfo.info('Start Create and Update Registration Service'+req.body);
+    loggerinfo.info('Start Create and Update Registration Service'+req.body.platform+'deviceID--->'+req.body.deviceId +'devicetoken-->' +req.body.registrationToken);
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if(req.body && req.body.hasOwnProperty('platform')  && req.body.hasOwnProperty('deviceId') && req.body.hasOwnProperty('packageName') && req.body.hasOwnProperty('registrationToken') && req.body.hasOwnProperty('packageName'))
     {
@@ -530,8 +530,11 @@ exports.subscribeToTopic = (req, res) => {
               "packageName":req.body.packageName,
               "deviceId":req.body.deviceId
             };
+
             Device.findOneAndUpdate(query, req.body, { upsert: true }, (err) => {
-            if (err) { return loggerinfo.error(err); }
+            if (err) { 
+              loggerinfo.info('ERROR-->'+error)
+              return loggerinfo.error(err); }
             loggerinfo.info('New device successfully register for FCM');
             var resultData = {
               "username":req.body.username,
