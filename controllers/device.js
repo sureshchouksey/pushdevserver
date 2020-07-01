@@ -339,16 +339,28 @@ exports.sendNotification = (req, res) => {
                 if(iosRegistrationTokens.length>=1){
 
                   if(apnProvider){
-                    var note = new apn.Notification();
                     var apnURL = item.notification.url ? item.notification.url :"";
-                    note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-                    note.badge = 1;
-                    note.sound = "ping.aiff";
-                    note.alert = item.notification.title// Opus Alert message";
-                    note.payload = {'messageFrom': item.notification.body,"attachment-url":apnURL};
-                    note.urlArgs ="http://google.com";
-                    note.topic = item.packageName;// + ".voip";
-                    note.aps = {  "content-available" : 1};
+                    let note = new apn.Notification({
+                      payload:{
+                       "messageFrom":item.notification.body,
+                       "attachment-url":apnURL
+                      },
+                category:"Billing",
+                alert:item.notification.title,
+                sound:"ping.aiff",
+                topic:item.packageName,
+                contentAvailable: 1//this key is also needed for production
+                });
+                    // var note = new apn.Notification();
+                    // var apnURL = item.notification.url ? item.notification.url :"";
+                    // note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+                    // note.badge = 1;
+                    // note.sound = "ping.aiff";
+                    // note.alert = item.notification.title// Opus Alert message";
+                    // note.payload = {'messageFrom': item.notification.body,"attachment-url":apnURL};
+                    // note.urlArgs ="http://google.com";
+                    // note.topic = item.packageName;// + ".voip";
+                   // note.aps = {  "content-available" : 1};
                     loggerinfo.info('note:Request parameter of send messaging service in APN',note);
                     loggerinfo.info('RegistrationTokens:Request parameter of send messaging service in APN',iosRegistrationTokens);
                     console.log('Before sending message to apn');        
