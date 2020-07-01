@@ -348,7 +348,7 @@ exports.sendNotification = (req, res) => {
                     note.payload = {'messageFrom': item.notification.body,"attachment-url":apnURL};
                     note.urlArgs ="http://google.com";
                     note.topic = item.packageName;// + ".voip";
-                   // note.aps = {  "content-available" : 1};
+                    note.aps = {  "content-available" : 1};
                     loggerinfo.info('note:Request parameter of send messaging service in APN',note);
                     loggerinfo.info('RegistrationTokens:Request parameter of send messaging service in APN',iosRegistrationTokens);
                     console.log('Before sending message to apn');        
