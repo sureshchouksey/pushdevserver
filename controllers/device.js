@@ -617,13 +617,26 @@ exports.sendToAll = (req,res)=>{
               if(apnProvider){
                 //res.status(200).json(apnProvider);
                 console.log('apnProvider',apnProvider);
-                var note = new apn.Notification();
-                note.expiry = Math.floor(Date.now() / 1000) + 3600; 
-                note.badge = 1;
-                note.sound = "ping.aiff";
-                note.alert = req.body.notification.title// Opus Alert message";
-                note.payload = {'messageFrom': req.body.notification.body,"attachment-url":apnURL};
-                note.topic = req.body.packageName;// + ".voip"; 
+                //code added
+                let note = new apn.Notification({
+                  payload:{
+                   "messageFrom":req.body.notification.body,
+                   "attachment-url":apnURL
+                  },
+            category:"Billing",
+            alert:req.body.notification.title,
+            sound:"ping.aiff",
+            topic:req.body.packageName,
+            contentAvailable: 1//this key is also needed for production
+            });
+                //end
+                // var note = new apn.Notification();
+                // note.expiry = Math.floor(Date.now() / 1000) + 3600; 
+                // note.badge = 1;
+                // note.sound = "ping.aiff";
+                // note.alert = req.body.notification.title// Opus Alert message";
+                // note.payload = {'messageFrom': req.body.notification.body,"attachment-url":apnURL};
+                // note.topic = req.body.packageName;// + ".voip"; 
                 //console.log('note for IOS',note,deviceTokens);
                 console.log('Before the send apn notification'); 
                 try{
