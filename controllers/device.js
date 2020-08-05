@@ -361,12 +361,16 @@ exports.sendNotification = (req, res) => {
                     // note.urlArgs ="http://google.com";
                     // note.topic = item.packageName;// + ".voip";
                    // note.aps = {  "content-available" : 1};
-                    loggerinfo.info('note:Request parameter of send messaging service in APN',note);
+                   // loggerinfo.info('note:Request parameter of send messaging service in APN',note);
                     loggerinfo.info('RegistrationTokens:Request parameter of send messaging service in APN',iosRegistrationTokens);
-                    console.log('Before sending message to apn');        
                     apnProvider.send(note, iosRegistrationTokens).then( (result) => {
                       // see documentation for an explanation of result
                       console.log('After sending message to apn');
+                      loggerinfo.info('APN- SendNotification ',iosRegistrationTokens);
+                      loggerinfo.info('APN- Actual Response ',result);
+
+                      loggerinfo.info('APN- Response ',JSON.stringify(result));
+
                           console.log('Result',JSON.stringify(result));
                           //res.status(200).json(result);      
                           responseList.push(result);
@@ -387,6 +391,7 @@ exports.sendNotification = (req, res) => {
                         
                         responseList[0].results.forEach((item,index)=>{
                           var result ={};
+                          loggerinfo.info('Android result-', item); 
                           console.log('item',item);
                           if(item.hasOwnProperty('error')){
                               result = {
@@ -410,7 +415,7 @@ exports.sendNotification = (req, res) => {
                               resultList.push(result);
                           }
                         })
-                        loggerinfo.info('resultList', resultList);                        
+                        //loggerinfo.info('resultList', resultList);                        
                       }          
                     })
                     .catch((error)=> {
