@@ -42,12 +42,15 @@ module.exports.opusConstant = Object.freeze({
         //"ca":"./pushConfig/apns-pro.pem",
         "passphrase": "fulcrum#1",
         //"voip":false,
-        
+       // host:'api.push.apple.com',
+       // port: 443,
         // proxy: {
         //   host: "gateway.push.apple.com",
         //   port: 2195
         // },
-        gateway: 'gateway.push.apple.com:2195',
+        //host: 'api.push.apple.com',
+       // port: 443,
+        //gateway: 'gateway.push.apple.com:2195',
         production: true
       },
       serviceAccountPath : "../pushConfig/opus-neo-firebase-adminsdk-c65n3-a3f2c53c2f.json",
