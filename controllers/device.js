@@ -295,14 +295,13 @@ exports.sendNotification = (req, res) => {
                 if (err) { return loggerinfo.error(err); }      
                 // Send a message to the devices corresponding to the provided
                 // registration tokens.  
-                console.log('After device find',obj);    
+                loggerinfo.info(' Username-->',obj);    
                 obj.forEach((device,index)=>{          
                     if(device.platform === 'Android'){
                         androidRegistrationTokens.push(device.registrationToken);
                     }
                     if(device.platform === 'iOS'){
                       loggerinfo.info('device.registrationToken --- > ' +iosRegistrationTokens);
-
                       iosRegistrationTokens.push(device.registrationToken);            
                     }
                 })        
@@ -363,11 +362,13 @@ exports.sendNotification = (req, res) => {
                    // note.aps = {  "content-available" : 1};
                    // loggerinfo.info('note:Request parameter of send messaging service in APN',note);
                     loggerinfo.info('RegistrationTokens:Request parameter of send messaging service in APN',iosRegistrationTokens);
+                    
                     apnProvider.send(note, iosRegistrationTokens).then( (result) => {
                       // see documentation for an explanation of result
                       console.log('After sending message to apn');
                       loggerinfo.info('APN- SendNotification ',iosRegistrationTokens);
                       loggerinfo.info('APN- Actual Response ',result);
+                      loggerinfo.info('UserName--> ',result);
 
                       loggerinfo.info('APN- Response ',JSON.stringify(result));
 
@@ -377,6 +378,7 @@ exports.sendNotification = (req, res) => {
                       });
                   }
                 }
+                
                 if(isPackageNameValid){
 
                 if(androidRegistrationTokens.length>=1){
@@ -448,6 +450,7 @@ exports.sendNotification = (req, res) => {
     loggerinfo.error('Send Notification Service: Internal server error.');
     res.status(500).json({status:500,message:'Internal server error'});
   }
+  loggerinfo.info('End SendNotification Service');
 
 }
 
