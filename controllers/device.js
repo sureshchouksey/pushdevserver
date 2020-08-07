@@ -368,7 +368,6 @@ exports.sendNotification = (req, res) => {
                       console.log('After sending message to apn');
                       loggerinfo.info('APN- SendNotification ',iosRegistrationTokens);
                       loggerinfo.info('APN- Actual Response ',result);
-                      loggerinfo.info('UserName--> ',result);
 
                       loggerinfo.info('APN- Response ',JSON.stringify(result));
 
