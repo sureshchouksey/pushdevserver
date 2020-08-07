@@ -301,7 +301,7 @@ exports.sendNotification = (req, res) => {
                         androidRegistrationTokens.push(device.registrationToken);
                     }
                     if(device.platform === 'iOS'){
-                      loggerinfo.info('device.registrationToken --- > ' +iosRegistrationTokens);
+                      //loggerinfo.info('device.registrationToken --- > ' +iosRegistrationTokens);
                       iosRegistrationTokens.push(device.registrationToken);            
                     }
                 })        
@@ -361,12 +361,12 @@ exports.sendNotification = (req, res) => {
                     // note.topic = item.packageName;// + ".voip";
                    // note.aps = {  "content-available" : 1};
                    // loggerinfo.info('note:Request parameter of send messaging service in APN',note);
-                    loggerinfo.info('RegistrationTokens:Request parameter of send messaging service in APN',iosRegistrationTokens);
+                    //loggerinfo.info('RegistrationTokens:Request parameter of send messaging service in APN',iosRegistrationTokens);
                     
                     apnProvider.send(note, iosRegistrationTokens).then( (result) => {
                       // see documentation for an explanation of result
                       console.log('After sending message to apn');
-                      loggerinfo.info('APN- SendNotification ',iosRegistrationTokens);
+                      //loggerinfo.info('APN- SendNotification ',iosRegistrationTokens);
                       loggerinfo.info('APN- Actual Response ',result);
 
                       loggerinfo.info('APN- Response ',JSON.stringify(result));
