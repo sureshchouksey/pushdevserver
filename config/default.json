@@ -1,7 +1,7 @@
 {
-	//"DBHost" : "mongodb://localhost/opusneodb",
+	"DBHost" : "mongodb://localhost/opusneodb",
 	//"DBHost" : "mongodb+srv://kay:suresh123@cluster0.mongodb.net/test",
-	"DBHost"	: "mongodb://sureshchouksey:suresh123@ds121495.mlab.com:21495/opusneodemo",
+	//"DBHost"	: "mongodb://sureshchouksey:suresh123@ds121495.mlab.com:21495/opusneodemo",
 	//"DBHost"	: "mongodb://sureshchouksey:suresh123@ds121495.mlab.com:21495/testdemo", // For testing purpose
 	//"DBHost"	: "mongodb://192.168.99.100:27017/opusneodb",  // MongoDB in Docker
 	//"DBHost"	: "mongodb://database/opusneodb",  // MongoDB in Docker
