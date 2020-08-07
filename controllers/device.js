@@ -346,6 +346,7 @@ exports.sendNotification = (req, res) => {
                       },
                 category:"Billing",
                 alert:item.notification.title,
+                priority:5,
                 sound:"ping.aiff",
                 topic:item.packageName,
                 contentAvailable: 1//this key is also needed for production
