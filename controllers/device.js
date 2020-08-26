@@ -300,6 +300,8 @@ exports.sendNotification = (req, res) => {
         var responseList = [];
         var androidRegistrationTokens =[];
         var iosRegistrationTokens =[];
+        var userData =[];
+
         var resultList = [];
         var isPackageNameValid = false;
         var apnProvider;
@@ -332,7 +334,8 @@ exports.sendNotification = (req, res) => {
                 // Send a message to the devices corresponding to the provided
                 // registration tokens.  
                 loggerpush.info('OBJECT-->', obj)
-                loggerinfo.info(' Username-->',obj);    
+                loggerinfo.info(' Username-->',obj); 
+                userData.push(obj);   
                 obj.forEach((device,index)=>{          
                     if(device.platform === 'Android'){
                         androidRegistrationTokens.push(device.registrationToken);
@@ -398,11 +401,14 @@ exports.sendNotification = (req, res) => {
                       loggerpush.info('json array',array);
                       for(var i =0;i<array.length;i++){
                         loggerpush.info('INSIDELOOP',array[i].device);
-                        Device.find({ registrationToken : array[i].device}, (err, obj) => {
-                          if (err) { return loggerinfo.error(err); }
-                          loggerpush.info("Search result of get Service", JSON.stringify(obj[0]));
+                        var picked = userData.find(o => o.registrationToken === array[i].device);
+                        loggerpush.info('RESULT--->',picked);
+
+                        // Device.find({ registrationToken : array[i].device}, (err, obj) => {
+                        //   if (err) { return loggerinfo.error(err); }
+                        //   loggerpush.info("Search result of get Service", JSON.stringify(obj[0]));
   
-                        });
+                        // });
                          
                       }
                       loggerinfo.info('APN- Response ',JSON.stringify(result));
