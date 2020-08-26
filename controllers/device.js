@@ -303,7 +303,7 @@ exports.sendNotification = (req, res) => {
                    }      
 
                 if(obj.length == 0){
-                  loggerpush.info(",",item.username,",,,,,,,,,,,,","No Devices / RegistrationTokens Found for This UserName");
+                  loggerpush.info(",",item.username,",,,,,,,,,,,,,","No Devices / RegistrationTokens Found for This UserName");
                 }
                 obj.forEach((device,index)=>{   
                   userData.push(device);   
