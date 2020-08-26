@@ -24,12 +24,15 @@ log4js.configure({
     task: { appenders: ['task'], level: 'info'},
     result: { appenders: ['result'], level: 'info' },
     error: { appenders: ['out','error'], level: 'error' },
+    debug: { appenders: ['out','debug'], level: 'debug' },
+
     rate: { appenders: ['rate'], level: 'info' }
   }
 });
 
 
 var loggerinfo = log4js.getLogger('info'); // initialize the var to use.
+
 var loggererror = log4js.getLogger('error'); // initialize the var to use.
 var loggerdebug = log4js.getLogger('debug'); // initialize the var to use.
 if(logConfig.visible){
@@ -77,6 +80,7 @@ var MearsDevConnectAdminApp = admin.initializeApp({
 // Get all data for loggedIn user
 exports.getAll = (req, res) => {
   try{
+    loggerinfo.debug('testing request-->',req);
     loggerinfo.info('Start Get Device Service');
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if(token === config.token){
@@ -132,7 +136,7 @@ exports.update = (req, res) => {
   try{
     loggerinfo.info('Start Create and Update Registration Service'+req.body.platform+'deviceID--->'+req.body.deviceId +'devicetoken-->' +req.body.registrationToken);
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    if(req.body && req.body.hasOwnProperty('platform')  && req.body.hasOwnProperty('deviceId') && req.body.hasOwnProperty('packageName') && req.body.hasOwnProperty('registrationToken') && req.body.hasOwnProperty('packageName'))
+    if(req.body && req.body.hasOwnProperty('platform')  && req.body.hasOwnProperty('deviceId') && req.body.hasOwnProperty('packageName') && req.body.hasOwnProperty('registrationToken') && req.body.hasOwnProperty('packageName') && req.body.hasOwnProperty('version') && req.body.hasOwnProperty('appversion'))
     {
       if(req.body.platform != "" && req.body.platform != null && req.body.registrationToken != "" && req.body.registrationToken != null && req.body.deviceId != "" && req.body.deviceId != null)      
       {
@@ -344,7 +348,6 @@ exports.sendNotification = (req, res) => {
                        "messageFrom":item.notification.body,
                        "attachment-url":apnURL
                       },
-               // category:"Billing",
                 alert:item.notification.title,
                 priority:5,
                 host:"api.push.apple.com:443",

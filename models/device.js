@@ -9,7 +9,9 @@ var deviceSchema = mongoose.Schema({
 	clientId:{ type: String},
 	packageName:{type:String},
 	group:{ type: String },
-	createdAt:{type:Date}
+	createdAt:{type:Date},
+	version:{type:String},
+	appversion:{type:String}
 });
 
 // Sets the createdAt parameter equal to the current time
