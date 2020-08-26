@@ -138,7 +138,7 @@ exports.update = (req, res) => {
   try{
     loggerinfo.info('Start Create and Update Registration Service'+req.body.platform+'deviceID--->'+req.body.deviceId +'devicetoken-->' +req.body.registrationToken);
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    if(req.body && req.body.hasOwnProperty('platform')  && req.body.hasOwnProperty('deviceId') && req.body.hasOwnProperty('packageName') && req.body.hasOwnProperty('registrationToken') && req.body.hasOwnProperty('packageName') && req.body.hasOwnProperty('version') && req.body.hasOwnProperty('appversion'))
+    if(req.body && req.body.hasOwnProperty('platform')  && req.body.hasOwnProperty('deviceId') && req.body.hasOwnProperty('packageName') && req.body.hasOwnProperty('registrationToken') && req.body.hasOwnProperty('packageName') && req.body.hasOwnProperty('version') && req.body.hasOwnProperty('appversion') && req.body.hasOwnProperty('phoneModel'))
     {
       if(req.body.platform != "" && req.body.platform != null && req.body.registrationToken != "" && req.body.registrationToken != null && req.body.deviceId != "" && req.body.deviceId != null)      
       {
