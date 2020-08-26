@@ -279,22 +279,7 @@ exports.sendNotification = (req, res) => {
   loggerinfo.info('Start SendNotification Service');
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   if(token === config.token ){
-    // Request body of Registration Service  { deviceId: '2a3a8d43-d3e2-426e-934e-0b8a0176335b',
-    // username: 'test6@opusneo.dk',
-    // apiKey: '15874d6b65d0e406210bb93275fe5415fddb358bed43e8289481cfb530812bac',
-    // clientId: '',
-    // packageName: 'com.opusneo.epmod2020.workplace',
-    // registrationToken: '15874d6b65d0e406210bb93275fe5415fddb358bed43e8289481cfb530812bac',
-    // group: 'fulcrum',
-    // platform: 'iOS',
-    // version: '13.6',
-    // appversion: '2.4.2' }
-    // Request body of sendNotification Service [ { username: 'adash',
-    // notification: 
-    //  { title: 'test13',
-    //    body: 'Notification Body11',
-    //    url: 'https://www.mod2020.dk/client/eogp/mod2020/mod2020.nsf/menuItem.xsp#!om-projektet' },
-    // packageName: 'com.opusneo.epmod2020.workplace' } ]
+   
         loggerinfo.info('Request body of sendNotification Service',req.body);
         var payLoadList = req.body;
         var responseList = [];
@@ -403,9 +388,9 @@ exports.sendNotification = (req, res) => {
                         //loggerpush.info('INSIDELOOP',array[i].device);
                         //loggerpush.info('INSIDELOOP',userData);
                         var output = userData.filter(function(value){ return value.registrationToken==array[i].device;})
-
-                        loggerpush.info('RESULT--->',output[0].version);
-                        loggerpush.info('RESULT--->',output[0].username);
+ //loggerpush.info('Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,
+ //NotificationDetail,createdDate,result,resultCode,errorMessage,sendDatetime,packageName');
+loggerpush.info(output[0].username,output[0].deviceId,output[0].appVersion,output[0].version,output[0].registrationToken,item.notification.body,item.notification.title,array[i].status,array[i].response);
 
                       }
                       loggerinfo.info('APN- Response ',JSON.stringify(result));
