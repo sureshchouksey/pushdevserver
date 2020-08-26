@@ -404,7 +404,9 @@ exports.sendNotification = (req, res) => {
                         //loggerpush.info('INSIDELOOP',userData);
                         var output = userData.filter(function(value){ return value.registrationToken==array[i].device;})
 
-                        loggerpush.info('RESULT--->',output);
+                        loggerpush.info('RESULT--->',output[0].version);
+                        loggerpush.info('RESULT--->',output[0].username);
+
                       }
                       loggerinfo.info('APN- Response ',JSON.stringify(result));
 
