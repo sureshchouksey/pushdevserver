@@ -260,11 +260,41 @@ exports.deleteByPlatform = (req, res) => {
 exports.sendNotification = (req, res) => {
 
   try{
-
+     var userName,deviceID,phoneModel,appVersion,osVersion,registrationToken,receivedDateTime,notificationTitle,notificationBody;
+    loggerpush.info('Start SendNotification Service');
+    loggerpush.info('Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationDetail,createdDate,result,resultCode,errorMessage,sendDatetime,packageName');
+  //parameters list for log in string comma seperated
+    // username,
+    // deviceID,
+    // phoneModel,
+    // appVersion,
+    // iOSVersion,
+    // registrationToken,
+    // NotificationDetail,
+    // createdDate,
+    // result,
+    // resultCode,
+    // errorMessage,
+    // sendDatetime,packageName'
   loggerinfo.info('Start SendNotification Service');
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   if(token === config.token ){
-      
+    // Request body of Registration Service  { deviceId: '2a3a8d43-d3e2-426e-934e-0b8a0176335b',
+    // username: 'test6@opusneo.dk',
+    // apiKey: '15874d6b65d0e406210bb93275fe5415fddb358bed43e8289481cfb530812bac',
+    // clientId: '',
+    // packageName: 'com.opusneo.epmod2020.workplace',
+    // registrationToken: '15874d6b65d0e406210bb93275fe5415fddb358bed43e8289481cfb530812bac',
+    // group: 'fulcrum',
+    // platform: 'iOS',
+    // version: '13.6',
+    // appversion: '2.4.2' }
+    // Request body of sendNotification Service [ { username: 'adash',
+    // notification: 
+    //  { title: 'test13',
+    //    body: 'Notification Body11',
+    //    url: 'https://www.mod2020.dk/client/eogp/mod2020/mod2020.nsf/menuItem.xsp#!om-projektet' },
+    // packageName: 'com.opusneo.epmod2020.workplace' } ]
         loggerinfo.info('Request body of sendNotification Service',req.body);
         var payLoadList = req.body;
         var responseList = [];
@@ -273,6 +303,7 @@ exports.sendNotification = (req, res) => {
         var resultList = [];
         var isPackageNameValid = false;
         var apnProvider;
+        
         payLoadList.forEach((item, index) => {
           if(item && item.hasOwnProperty('packageName') && item.hasOwnProperty('username') && item.hasOwnProperty('notification'))
           {
@@ -284,7 +315,6 @@ exports.sendNotification = (req, res) => {
                  newData[data] = item.notification[data];
                  
               })
-              console.log('newData',newData);
               if(item.notification.hasOwnProperty('silent')){
                   if(typeof item.notification['silent'] === 'boolean'){
                     newData['silent'] = item.notification['silent'] ? 'true' :'false';
@@ -301,6 +331,7 @@ exports.sendNotification = (req, res) => {
                 if (err) { return loggerinfo.error(err); }      
                 // Send a message to the devices corresponding to the provided
                 // registration tokens.  
+                loggerpush.info('OBJECT-->', obj)
                 loggerinfo.info(' Username-->',obj);    
                 obj.forEach((device,index)=>{          
                     if(device.platform === 'Android'){
@@ -357,24 +388,15 @@ exports.sendNotification = (req, res) => {
                 topic:item.packageName,
                 contentAvailable: 1//this key is also needed for production
                 });
-                    // var note = new apn.Notification();
-                    // var apnURL = item.notification.url ? item.notification.url :"";
-                    // note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-                    // note.badge = 1;
-                    // note.sound = "ping.aiff";
-                    // note.alert = item.notification.title// Opus Alert message";
-                    // note.payload = {'messageFrom': item.notification.body,"attachment-url":apnURL};
-                    // note.urlArgs ="http://google.com";
-                    // note.topic = item.packageName;// + ".voip";
-                   // note.aps = {  "content-available" : 1};
-                   // loggerinfo.info('note:Request parameter of send messaging service in APN',note);
-                    //loggerinfo.info('RegistrationTokens:Request parameter of send messaging service in APN',iosRegistrationTokens);
-                    
-                    apnProvider.send(note, iosRegistrationTokens).then( (result) => {
+                      apnProvider.send(note, iosRegistrationTokens).then( (result) => {
                       // see documentation for an explanation of result
                       console.log('After sending message to apn');
                       //loggerinfo.info('APN- SendNotification ',iosRegistrationTokens);
                       loggerinfo.info('APN- Actual Response ',result);
+                      var jsonresult = JSON.parse(result);
+                      var array = jsonresult.ArrayOf('failed');
+                      loggerpush.info('json array',array);
+                      loggerpush.info('jsonresult',jsonresult);
 
                       loggerinfo.info('APN- Response ',JSON.stringify(result));
 
@@ -798,7 +820,6 @@ exports.readLogFile = (req,res)=>{
 }
   exports.clearLog = (req,res)=>{
     try{
-      loggerpush.info('clearLog---->>>>>');
       var realPath = path.join(__dirname, '../logs/default.log')
         fs.writeFile(realPath,'',function(){
           loggerinfo.info('Start Clear Log File Service'); 
