@@ -402,7 +402,9 @@ exports.sendNotification = (req, res) => {
                       for(var i =0;i<array.length;i++){
                         loggerpush.info('INSIDELOOP',array[i].device);
                         var picked = userData.find(o => o.registrationToken === array[i].device);
-                        loggerpush.info('RESULT--->',picked);
+                        var output = userData.filter(function(value){ return value.city==array[i].device;})
+
+                        loggerpush.info('RESULT--->',output);
 
                         // Device.find({ registrationToken : array[i].device}, (err, obj) => {
                         //   if (err) { return loggerinfo.error(err); }
