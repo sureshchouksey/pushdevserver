@@ -17,7 +17,7 @@ log4js.configure({
     result: { type: 'dateFile', filename: 'logs/result',"pattern":".log", alwaysIncludePattern:true}, 
     error: { type: 'dateFile', filename: 'logs/error', "pattern":".log",alwaysIncludePattern:true}, 
     default: { type: 'dateFile', filename: 'logs/default', "pattern":".log",alwaysIncludePattern:true}, 
-    pushlog: { type: 'dateFile', filename: 'logs/EPPushLog', "pattern":".log",alwaysIncludePattern:true}, 
+    pushlog: {  filename: 'logs/EPPushLog', "pattern":".log",alwaysIncludePattern:true}, 
     rate: { type: 'dateFile', filename: 'logs/rate', "pattern":".log",alwaysIncludePattern:true} 
   },
   categories: {
@@ -262,20 +262,8 @@ exports.sendNotification = (req, res) => {
   try{
      var userName,deviceID,phoneModel,appVersion,osVersion,registrationToken,receivedDateTime,notificationTitle,notificationBody;
     loggerpush.info('Start SendNotification Service');
-    loggerpush.info('Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationDetail,createdDate,result,resultCode,errorMessage,sendDatetime,packageName');
-  //parameters list for log in string comma seperated
-    // username,
-    // deviceID,
-    // phoneModel,
-    // appVersion,
-    // iOSVersion,
-    // registrationToken,
-    // NotificationDetail,
-    // createdDate,
-    // result,
-    // resultCode,
-    // errorMessage,
-    // sendDatetime,packageName'
+    loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,errorMessage,sendDatetime,packageName');
+
   loggerinfo.info('Start SendNotification Service');
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   if(token === config.token ){
@@ -302,23 +290,23 @@ exports.sendNotification = (req, res) => {
                  newData[data] = item.notification[data];
                  
               })
-              if(item.notification.hasOwnProperty('silent')){
-                  if(typeof item.notification['silent'] === 'boolean'){
-                    newData['silent'] = item.notification['silent'] ? 'true' :'false';
-                  }
-                  delete item.notification['silent'];
-              }
+              // if(item.notification.hasOwnProperty('silent')){
+              //     if(typeof item.notification['silent'] === 'boolean'){
+              //       newData['silent'] = item.notification['silent'] ? 'true' :'false';
+              //     }
+              //     delete item.notification['silent'];
+              // }
               
               var payload = {
-               // notification: item.notification,
                 data:newData
               };
-              
+              //no token find logs to be added
               Device.find({ 'username': { $in: userList } }, (err, obj) => {
                 if (err) { return loggerinfo.error(err); }      
                 // Send a message to the devices corresponding to the provided
-                // registration tokens.  
-                loggerinfo.info(' Username-->',obj); 
+                if(obj.count == 0){
+                  loggerpush.info(item.username,"No Devices / RegistrationTokens Found",",,,,,,,");
+                }
                 obj.forEach((device,index)=>{   
                   userData.push(device);   
        
@@ -326,7 +314,6 @@ exports.sendNotification = (req, res) => {
                         androidRegistrationTokens.push(device.registrationToken);
                     }
                     if(device.platform === 'iOS'){
-                      //loggerinfo.info('device.registrationToken --- > ' +iosRegistrationTokens);
                       iosRegistrationTokens.push(device.registrationToken);            
                     }
                 })        
@@ -377,32 +364,26 @@ exports.sendNotification = (req, res) => {
                 contentAvailable: 1//this key is also needed for production
                 });
                       apnProvider.send(note, iosRegistrationTokens).then( (result) => {
-                      // see documentation for an explanation of result
-                      console.log('After sending message to apn');
-                      //loggerinfo.info('APN- SendNotification ',iosRegistrationTokens);
+                      
+                    //APN RESOPNSE RESULT RECEIVED
+                        console.log('After sending message to apn');
                       loggerinfo.info('APN- Actual Response ',result);
                       var jsonresult = JSON.parse(JSON.stringify(result));
+                      //FAILED ARRAY CREATION
                       var array = jsonresult["failed"];
+                      //SUCCESS ARRAY CREATION
                       var arraySent = jsonresult["sent"];
                       for(var j =0;j<arraySent.length;j++){
                         var output = userData.filter(function(value){ return value.registrationToken==arraySent[i].device;})
-                        loggerpush.info(output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","Success","",",","");
-
+                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","Success","",",","");
 
                       }
                         // loggerpush.info('json array',array);
                       for(var i =0;i<array.length;i++){
-                       
                         var output = userData.filter(function(value){ return value.registrationToken==array[i].device;})
- //loggerpush.info('Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,
- //NotificationDetail,createdDate,result,resultCode,errorMessage,sendDatetime,packageName');
-loggerpush.info(output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","failed",array[i].status,",",array[i].response);
-
+                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","failed",array[i].status,",",array[i].response);
                       }
-                      //loggerinfo.info('APN- Response ',JSON.stringify(result));
-
-                          console.log('Result',JSON.stringify(result));
-                          //res.status(200).json(result);      
+                          console.log('Result-->',JSON.stringify(result));
                           responseList.push(result);
                       });
                   }
@@ -803,7 +784,7 @@ exports.readLogFile = (req,res)=>{
   }
   exports.readPushLogFile = (req,res)=>{
     try{
-        loggerinfo.info('Start Read Log File Service');      
+        //loggerinfo.info('Start Read Log File Service');      
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
         if(token === config.token){ 
           var realPath = path.join(__dirname, '../logs/EPPushLog.log')    
