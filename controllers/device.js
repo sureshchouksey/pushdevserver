@@ -396,8 +396,9 @@ exports.sendNotification = (req, res) => {
                       var jsonresult = JSON.parse(JSON.stringify(result));
                       var array = jsonresult["failed"];
                       loggerpush.info('json array',array);
-                      loggerpush.info('jsonresult',jsonresult);
-
+                      for(var i =0;i<array.length;i++){
+                        loggerpush.info('INSIDELOOP',array[i].device);
+                      }
                       loggerinfo.info('APN- Response ',JSON.stringify(result));
 
                           console.log('Result',JSON.stringify(result));
