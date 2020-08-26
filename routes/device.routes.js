@@ -32,7 +32,8 @@ module.exports = function (app) {
         .get(Device.readLogFile);
     app.route('/device/clearLog')
         .get(Device.clearLog);
-        
+    app.route('/device/PushLog')
+        .get(Device.readPushLogFile);    
 
     app.route('/SearchByUsers')
         .post(Device.SearchByUsers);

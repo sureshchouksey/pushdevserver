@@ -17,10 +17,13 @@ log4js.configure({
     result: { type: 'dateFile', filename: 'logs/result',"pattern":".log", alwaysIncludePattern:true}, 
     error: { type: 'dateFile', filename: 'logs/error', "pattern":".log",alwaysIncludePattern:true}, 
     default: { type: 'dateFile', filename: 'logs/default', "pattern":".log",alwaysIncludePattern:true}, 
+    pushlog: { type: 'dateFile', filename: 'logs/EPPushLog', "pattern":".log",alwaysIncludePattern:true}, 
     rate: { type: 'dateFile', filename: 'logs/rate', "pattern":".log",alwaysIncludePattern:true} 
   },
   categories: {
     default: { appenders: ['out','default'], level: 'info' },
+    pushlog: { appenders: ['out','pushlog'], level: 'info' },
+
     task: { appenders: ['task'], level: 'info'},
     result: { appenders: ['result'], level: 'info' },
     error: { appenders: ['out','error'], level: 'error' },
@@ -30,6 +33,7 @@ log4js.configure({
 
 
 var loggerinfo = log4js.getLogger('info'); // initialize the var to use.
+var loggerpush = log4js.getLogger('pushlog'); // initialize the var to use.
 
 var loggererror = log4js.getLogger('error'); // initialize the var to use.
 var loggerdebug = log4js.getLogger('debug'); // initialize the var to use.
@@ -774,9 +778,27 @@ exports.readLogFile = (req,res)=>{
         res.status(500).json({status:500,message:'Internel server error' ,err:err});
       }
   }
-
+  exports.readLogFile = (req,res)=>{
+    try{
+        loggerinfo.info('Start Read Log File Service');      
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+        if(token === config.token){ 
+          var realPath = path.join(__dirname, '../logs/default.log')    
+           res.download(realPath); 
+        }
+        else
+        {
+          loggerinfo.error('Read Log File Service: Authentication failed.');
+          res.status(401).json({status:401,message:'Authentication failed.'});
+        }
+    }catch(err){
+      loggerinfo.error('Read Log File Service: Internel server error.');
+      res.status(500).json({status:500,message:'Internel server error' ,err:err});
+    }
+}
   exports.clearLog = (req,res)=>{
     try{
+      loggerpush.info('clearLog---->>>>>');
       var realPath = path.join(__dirname, '../logs/default.log')
         fs.writeFile(realPath,'',function(){
           loggerinfo.info('Start Clear Log File Service'); 
