@@ -24,8 +24,6 @@ log4js.configure({
     task: { appenders: ['task'], level: 'info'},
     result: { appenders: ['result'], level: 'info' },
     error: { appenders: ['out','error'], level: 'error' },
-    debug: { appenders: ['out','debug'], level: 'debug' },
-
     rate: { appenders: ['rate'], level: 'info' }
   }
 });
@@ -80,7 +78,7 @@ var MearsDevConnectAdminApp = admin.initializeApp({
 // Get all data for loggedIn user
 exports.getAll = (req, res) => {
   try{
-    loggerinfo.debug('testing request-->',req);
+    loggerinfo.task('TEST--->',req);
     loggerinfo.info('Start Get Device Service');
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if(token === config.token){
