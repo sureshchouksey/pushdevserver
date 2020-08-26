@@ -401,8 +401,10 @@ exports.sendNotification = (req, res) => {
                       loggerpush.info('json array',array);
                       for(var i =0;i<array.length;i++){
                         loggerpush.info('INSIDELOOP',array[i].device);
+                        loggerpush.info('INSIDELOOP',userData);
+
                         var picked = userData.find(o => o.registrationToken === array[i].device);
-                        var output = userData.filter(function(value){ return value.city==array[i].device;})
+                        var output = userData.filter(function(value){ return value.registrationToken==array[i].device;})
 
                         loggerpush.info('RESULT--->',output);
 
