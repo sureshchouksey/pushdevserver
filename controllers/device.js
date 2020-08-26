@@ -783,7 +783,7 @@ exports.readLogFile = (req,res)=>{
         loggerinfo.info('Start Read Log File Service');      
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
         if(token === config.token){ 
-          var realPath = path.join(__dirname, '../logs/default.log')    
+          var realPath = path.join(__dirname, '../logs/EPPushLog.log')    
            res.download(realPath); 
         }
         else
