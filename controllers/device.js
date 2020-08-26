@@ -400,20 +400,11 @@ exports.sendNotification = (req, res) => {
                       var array = jsonresult["failed"];
                       loggerpush.info('json array',array);
                       for(var i =0;i<array.length;i++){
-                        loggerpush.info('INSIDELOOP',array[i].device);
-                        loggerpush.info('INSIDELOOP',userData);
-
-                        var picked = userData.find(o => o.registrationToken === array[i].device);
+                        //loggerpush.info('INSIDELOOP',array[i].device);
+                        //loggerpush.info('INSIDELOOP',userData);
                         var output = userData.filter(function(value){ return value.registrationToken==array[i].device;})
 
                         loggerpush.info('RESULT--->',output);
-
-                        // Device.find({ registrationToken : array[i].device}, (err, obj) => {
-                        //   if (err) { return loggerinfo.error(err); }
-                        //   loggerpush.info("Search result of get Service", JSON.stringify(obj[0]));
-  
-                        // });
-                         
                       }
                       loggerinfo.info('APN- Response ',JSON.stringify(result));
 
