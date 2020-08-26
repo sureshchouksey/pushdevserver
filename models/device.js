@@ -10,6 +10,7 @@ var deviceSchema = mongoose.Schema({
 	packageName:{type:String},
 	group:{ type: String },
 	createdAt:{type:Date},
+	phoneModel:{type:String},
 	version:{type:String},
 	appversion:{type:String}
 });
