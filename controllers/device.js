@@ -398,6 +398,12 @@ exports.sendNotification = (req, res) => {
                       loggerpush.info('json array',array);
                       for(var i =0;i<array.length;i++){
                         loggerpush.info('INSIDELOOP',array[i].device);
+                        Device.find({ registrationToken : array[i].device}, (err, obj) => {
+                          if (err) { return loggerinfo.error(err); }
+                          loggerpush.info("Search result of get Service", obj);
+  
+                        });
+                         
                       }
                       loggerinfo.info('APN- Response ',JSON.stringify(result));
 
