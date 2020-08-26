@@ -260,9 +260,8 @@ exports.deleteByPlatform = (req, res) => {
 exports.sendNotification = (req, res) => {
 
   try{
-    var datetimeServiceHit = new Date();
     loggerpush.info('Start SendNotification Service');
-    loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,packageName');
+    loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,packageName,Comments');
 
   loggerinfo.info('Start SendNotification Service');
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -297,8 +296,11 @@ exports.sendNotification = (req, res) => {
               };
               //FINDING ALL DEVICE TOKENS AS PER USERNAME CREATING LIST AND ADDING THEM IN ARRAY FOR SEND AS REQUEST TO APN 
               Device.find({ 'username': { $in: userList } }, (err, obj) => {
-                if (err) { return loggerinfo.error(err); }      
-                // Send a message to the devices corresponding to the provided
+                if (err) { 
+                  loggerpush.info(item.username,',,,,,,,,,,,,,,',err);
+                  return 
+                  
+                   }      
 
                 if(obj.length == 0){
                   loggerpush.info(item.username,",,,,,,,,,,,","No Devices / RegistrationTokens Found for This UserName");
@@ -358,7 +360,7 @@ exports.sendNotification = (req, res) => {
                 contentAvailable: 1
                 });
                  
-                 
+                 //ACTUAL METHOD TO SEND PUSH MESSAGES FOR ALL TOKENS AS PER INDIVIDUAL USERNAME
                 apnProvider.send(note, iosRegistrationTokens).then( (result) => {
                     
                     //APN RESPONSE RESULT RECEIVED
@@ -385,6 +387,12 @@ exports.sendNotification = (req, res) => {
                   }
                 }
                 
+
+
+
+
+
+
                 if(isPackageNameValid){
 
                 if(androidRegistrationTokens.length>=1){
@@ -421,10 +429,10 @@ exports.sendNotification = (req, res) => {
                               resultList.push(result);
                           }
                         })
-                        //loggerinfo.info('resultList', resultList);                        
                       }          
                     })
                     .catch((error)=> {
+                      //add username 
                       loggerinfo.error("Error sending message:", error);
                     });
                   }
