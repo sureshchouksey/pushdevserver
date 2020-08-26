@@ -290,13 +290,7 @@ exports.sendNotification = (req, res) => {
                  newData[data] = item.notification[data];
                  
               })
-              // if(item.notification.hasOwnProperty('silent')){
-              //     if(typeof item.notification['silent'] === 'boolean'){
-              //       newData['silent'] = item.notification['silent'] ? 'true' :'false';
-              //     }
-              //     delete item.notification['silent'];
-              // }
-              
+  
               var payload = {
                 data:newData
               };
@@ -304,6 +298,8 @@ exports.sendNotification = (req, res) => {
               Device.find({ 'username': { $in: userList } }, (err, obj) => {
                 if (err) { return loggerinfo.error(err); }      
                 // Send a message to the devices corresponding to the provided
+                loggerpush.info("--->>",obj.count , obj.length);
+
                 if(obj.count == 0){
                   loggerpush.info(item.username,"No Devices / RegistrationTokens Found",",,,,,,,");
                 }
@@ -344,11 +340,8 @@ exports.sendNotification = (req, res) => {
                   isPackageNameValid = false;
                   loggerinfo.error('Send Notification Service: Package Name is inValid.');       
                   res.status(500).json({status:500,message:'Package Name is inValid.'});
-                }
-                
-                 
+                }                 
                 if(iosRegistrationTokens.length>=1){
-
                   if(apnProvider){
                     var apnURL = item.notification.url ? item.notification.url :"";
                     let note = new apn.Notification({
@@ -361,7 +354,7 @@ exports.sendNotification = (req, res) => {
                 host:"api.push.apple.com:443",
                 sound:"ping.aiff",
                 topic:item.packageName,
-                contentAvailable: 1//this key is also needed for production
+                contentAvailable: 1
                 });
                       apnProvider.send(note, iosRegistrationTokens).then( (result) => {
                       
@@ -374,7 +367,7 @@ exports.sendNotification = (req, res) => {
                       //SUCCESS ARRAY CREATION
                       var arraySent = jsonresult["sent"];
                       for(var j =0;j<arraySent.length;j++){
-                        var output = userData.filter(function(value){ return value.registrationToken==arraySent[i].device;})
+                        var output = userData.filter(function(value){ return value.registrationToken==arraySent[j].device;})
                         loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","Success","",",","");
 
                       }
