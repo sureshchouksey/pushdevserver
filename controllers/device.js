@@ -383,14 +383,20 @@ exports.sendNotification = (req, res) => {
                       loggerinfo.info('APN- Actual Response ',result);
                       var jsonresult = JSON.parse(JSON.stringify(result));
                       var array = jsonresult["failed"];
-                     // loggerpush.info('json array',array);
+                      var arraySent = jsonresult["sent"];
+                      for(var j =0;j<arraySent.length;j++){
+                        var output = userData.filter(function(value){ return value.registrationToken==arraySent[i].device;})
+                        loggerpush.info(output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","Success","",",","");
+
+
+                      }
+                        // loggerpush.info('json array',array);
                       for(var i =0;i<array.length;i++){
-                        //loggerpush.info('INSIDELOOP',array[i].device);
-                        //loggerpush.info('INSIDELOOP',userData);
+                       
                         var output = userData.filter(function(value){ return value.registrationToken==array[i].device;})
  //loggerpush.info('Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,
  //NotificationDetail,createdDate,result,resultCode,errorMessage,sendDatetime,packageName');
-loggerpush.info(output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",array[i].status,",",array[i].response);
+loggerpush.info(output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","failed",array[i].status,",",array[i].response);
 
                       }
                       //loggerinfo.info('APN- Response ',JSON.stringify(result));
