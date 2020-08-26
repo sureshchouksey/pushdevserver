@@ -262,7 +262,7 @@ exports.sendNotification = (req, res) => {
   try{
     var datetimeServiceHit = new Date();
     loggerpush.info('Start SendNotification Service');
-    loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,errorMessage,sendDatetime,packageName');
+    loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,errorMessage,ApnHitDateTime,packageName');
 
   loggerinfo.info('Start SendNotification Service');
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -279,6 +279,7 @@ exports.sendNotification = (req, res) => {
         var isPackageNameValid = false;
         var apnProvider;
         
+        //FOR EACH ITEM IN NOTIFICATION REQUEST like packageName,username,notification please refer postman collection ch
         payLoadList.forEach((item, index) => {
           if(item && item.hasOwnProperty('packageName') && item.hasOwnProperty('username') && item.hasOwnProperty('notification'))
           {
@@ -287,20 +288,20 @@ exports.sendNotification = (req, res) => {
               userList = item.username.split(',');
               var itemKeys = Object.keys(item.notification);
               itemKeys.forEach(function(data,index){
-                 newData[data] = item.notification[data];
+              newData[data] = item.notification[data];
                  
               })
   
               var payload = {
                 data:newData
               };
-              //no token find logs to be added
+              //FINDING ALL DEVICE TOKENS AS PER USERNAME CREATING LIST AND ADDING THEM IN ARRAY FOR SEND AS REQUEST TO APN 
               Device.find({ 'username': { $in: userList } }, (err, obj) => {
                 if (err) { return loggerinfo.error(err); }      
                 // Send a message to the devices corresponding to the provided
 
                 if(obj.length == 0){
-                  loggerpush.info(item.username,"No Devices / RegistrationTokens Found",",,,,,,,");
+                  loggerpush.info(item.username,"No Devices / RegistrationTokens Found for This User",",,,,,,,");
                 }
                 obj.forEach((device,index)=>{   
                   userData.push(device);   
@@ -341,6 +342,7 @@ exports.sendNotification = (req, res) => {
                   res.status(500).json({status:500,message:'Package Name is inValid.'});
                 }                 
                 if(iosRegistrationTokens.length>=1){
+                  //APN PAYLOAD CREATION
                   if(apnProvider){
                     var apnURL = item.notification.url ? item.notification.url :"";
                     let note = new apn.Notification({
@@ -355,27 +357,29 @@ exports.sendNotification = (req, res) => {
                 topic:item.packageName,
                 contentAvailable: 1
                 });
-                      apnProvider.send(note, iosRegistrationTokens).then( (result) => {
-                      
-                    //APN RESOPNSE RESULT RECEIVED
-                        console.log('After sending message to apn');
+                 
+                var 
+                apnProvider.send(note, iosRegistrationTokens).then( (result) => {
+                    
+                    //APN RESPONSE RESULT RECEIVED
+                      console.log('After sending message to apn');
                       loggerinfo.info('APN- Actual Response ',result);
                       var jsonresult = JSON.parse(JSON.stringify(result));
                       //FAILED ARRAY CREATION
-                      var array = jsonresult["failed"];
+                      var arrayFailed = jsonresult["failed"];
                       //SUCCESS ARRAY CREATION
                       var arraySent = jsonresult["sent"];
+                     //SENT ARRAY ITERATION 
                       for(var j =0;j<arraySent.length;j++){
                         var output = userData.filter(function(value){ return value.registrationToken==arraySent[j].device;})
-                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","Success","",",","");
+                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","Success","",",","",new Date(),item.packageName);
 
                       }
-                        // loggerpush.info('json array',array);
-                      for(var i =0;i<array.length;i++){
-                        var output = userData.filter(function(value){ return value.registrationToken==array[i].device;})
-                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","failed",array[i].status,",",array[i].response);
+                      //FAILED ARRAY ITERATION
+                      for(var i =0;i<arrayFailed.length;i++){
+                        var output = userData.filter(function(value){ return value.registrationToken==arrayFailed[i].device;})
+                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","failed",array[i].status,",",new Date(),array[i].response,packageName);
                       }
-                          console.log('Result-->',JSON.stringify(result));
                           responseList.push(result);
                       });
                   }
@@ -384,8 +388,6 @@ exports.sendNotification = (req, res) => {
                 if(isPackageNameValid){
 
                 if(androidRegistrationTokens.length>=1){
-                  loggerinfo.info('registrationTokens:Request parameter of send messaging service in FCM',androidRegistrationTokens);
-                  loggerinfo.info('payload:Request parameter of send messaging service in FCM',payload);        
                   adminApp.messaging().sendToDevice(androidRegistrationTokens, payload)
                     .then((response)=> {          
                       // See the MessagingDevicesResponse reference documentation for
