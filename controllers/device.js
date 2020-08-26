@@ -262,7 +262,7 @@ exports.sendNotification = (req, res) => {
   try{
     var datetimeServiceHit = new Date();
     loggerpush.info('Start SendNotification Service');
-    loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,errorMessage,ApnHitDateTime,packageName');
+    loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,packageName');
 
   loggerinfo.info('Start SendNotification Service');
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
