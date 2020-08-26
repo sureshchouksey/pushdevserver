@@ -393,7 +393,7 @@ exports.sendNotification = (req, res) => {
                       console.log('After sending message to apn');
                       //loggerinfo.info('APN- SendNotification ',iosRegistrationTokens);
                       loggerinfo.info('APN- Actual Response ',result);
-                      var jsonresult = JSON.parse(result);
+                      var jsonresult = JSON.parse(JSON.stringify(result));
                       var array = jsonresult.ArrayOf('failed');
                       loggerpush.info('json array',array);
                       loggerpush.info('jsonresult',jsonresult);
