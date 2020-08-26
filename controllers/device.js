@@ -260,7 +260,7 @@ exports.deleteByPlatform = (req, res) => {
 exports.sendNotification = (req, res) => {
 
   try{
-     var userName,deviceID,phoneModel,appVersion,osVersion,registrationToken,receivedDateTime,notificationTitle,notificationBody;
+    var datetimeServiceHit = new Date();
     loggerpush.info('Start SendNotification Service');
     loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,errorMessage,sendDatetime,packageName');
 
@@ -298,9 +298,8 @@ exports.sendNotification = (req, res) => {
               Device.find({ 'username': { $in: userList } }, (err, obj) => {
                 if (err) { return loggerinfo.error(err); }      
                 // Send a message to the devices corresponding to the provided
-                loggerpush.info("--->>",obj.count , obj.length);
 
-                if(obj.count == 0){
+                if(obj.length == 0){
                   loggerpush.info(item.username,"No Devices / RegistrationTokens Found",",,,,,,,");
                 }
                 obj.forEach((device,index)=>{   
