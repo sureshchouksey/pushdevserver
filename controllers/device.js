@@ -372,7 +372,7 @@ exports.sendNotification = (req, res) => {
                      //SENT ARRAY ITERATION 
                       for(var j =0;j<arraySent.length;j++){
                         var output = userData.filter(function(value){ return value.registrationToken==arraySent[j].device;})
-                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","Success","",",","",new Date(),item.packageName);
+                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,output[0].createdAt,",","Success",",",",",new Date(),item.packageName);
 
                       }
                       //FAILED ARRAY ITERATION
