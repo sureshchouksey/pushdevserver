@@ -400,7 +400,7 @@ exports.sendNotification = (req, res) => {
                         loggerpush.info('INSIDELOOP',array[i].device);
                         Device.find({ registrationToken : array[i].device}, (err, obj) => {
                           if (err) { return loggerinfo.error(err); }
-                          loggerpush.info("Search result of get Service", obj);
+                          loggerpush.info("Search result of get Service", JSON.stringify(obj[0]));
   
                         });
                          
