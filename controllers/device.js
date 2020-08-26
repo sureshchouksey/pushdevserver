@@ -261,7 +261,7 @@ exports.sendNotification = (req, res) => {
 
   try{
     loggerpush.info('Start SendNotification Service');
-    loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,packageName,Comments');
+    loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,Comments');
 
   loggerinfo.info('Start SendNotification Service');
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -297,13 +297,13 @@ exports.sendNotification = (req, res) => {
               //FINDING ALL DEVICE TOKENS AS PER USERNAME CREATING LIST AND ADDING THEM IN ARRAY FOR SEND AS REQUEST TO APN 
               Device.find({ 'username': { $in: userList } }, (err, obj) => {
                 if (err) { 
-                  loggerpush.info(item.username,',,,,,,,,,,,,,,',err);
+                  loggerpush.info(",",item.username,',,,,,,,,,,,,,',err);
                   return 
                   
                    }      
 
                 if(obj.length == 0){
-                  loggerpush.info(item.username,",,,,,,,,,,,","No Devices / RegistrationTokens Found for This UserName");
+                  loggerpush.info(",",item.username,",,,,,,,,,,,,","No Devices / RegistrationTokens Found for This UserName");
                 }
                 obj.forEach((device,index)=>{   
                   userData.push(device);   
@@ -374,13 +374,13 @@ exports.sendNotification = (req, res) => {
                      //SENT ARRAY ITERATION 
                       for(var j =0;j<arraySent.length;j++){
                         var output = userData.filter(function(value){ return value.registrationToken==arraySent[j].device;})
-                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",output[0].createdAt,",","Success",",",",",new Date(),",",item.packageName);
+                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",output[0].createdAt,",","Success",",",",",new Date());
 
                       }
                       //FAILED ARRAY ITERATION
                       for(var i =0;i<arrayFailed.length;i++){
                         var output = userData.filter(function(value){ return value.registrationToken==arrayFailed[i].device;})
-                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",output[0].createdAt,",","failed,",arrayFailed[i].status,",",new Date(),",",arrayFailed[i].response,",",item.packageName);
+                        loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",output[0].createdAt,",","failed,",arrayFailed[i].status,",",new Date(),",",arrayFailed[i].response);
                       }
                           responseList.push(result);
                       });
