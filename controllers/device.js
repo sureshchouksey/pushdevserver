@@ -778,7 +778,7 @@ exports.readLogFile = (req,res)=>{
         res.status(500).json({status:500,message:'Internel server error' ,err:err});
       }
   }
-  exports.readLogFile = (req,res)=>{
+  exports.readPushLogFile = (req,res)=>{
     try{
         loggerinfo.info('Start Read Log File Service');      
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
