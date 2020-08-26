@@ -358,7 +358,7 @@ exports.sendNotification = (req, res) => {
                 contentAvailable: 1
                 });
                  
-                var 
+                 
                 apnProvider.send(note, iosRegistrationTokens).then( (result) => {
                     
                     //APN RESPONSE RESULT RECEIVED
