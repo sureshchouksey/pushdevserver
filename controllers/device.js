@@ -383,17 +383,17 @@ exports.sendNotification = (req, res) => {
                       loggerinfo.info('APN- Actual Response ',result);
                       var jsonresult = JSON.parse(JSON.stringify(result));
                       var array = jsonresult["failed"];
-                      loggerpush.info('json array',array);
+                     // loggerpush.info('json array',array);
                       for(var i =0;i<array.length;i++){
                         //loggerpush.info('INSIDELOOP',array[i].device);
                         //loggerpush.info('INSIDELOOP',userData);
                         var output = userData.filter(function(value){ return value.registrationToken==array[i].device;})
  //loggerpush.info('Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,
  //NotificationDetail,createdDate,result,resultCode,errorMessage,sendDatetime,packageName');
-loggerpush.info(output[0].username,output[0].deviceId,output[0].appVersion,output[0].version,output[0].registrationToken,item.notification.body,item.notification.title,array[i].status,array[i].response);
+loggerpush.info(output[0].username,",",output[0].deviceId,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",array[i].status,",",array[i].response);
 
                       }
-                      loggerinfo.info('APN- Response ',JSON.stringify(result));
+                      //loggerinfo.info('APN- Response ',JSON.stringify(result));
 
                           console.log('Result',JSON.stringify(result));
                           //res.status(200).json(result);      
@@ -815,7 +815,7 @@ exports.readLogFile = (req,res)=>{
 }
   exports.clearLog = (req,res)=>{
     try{
-      var realPath = path.join(__dirname, '../logs/default.log')
+      var realPath = path.join(__dirname, '../logs/EPPushLog.log')
         fs.writeFile(realPath,'',function(){
           loggerinfo.info('Start Clear Log File Service'); 
           console.log('done');
