@@ -17,7 +17,7 @@ log4js.configure({
     result: { type: 'dateFile', filename: 'logs/result',"pattern":".log", alwaysIncludePattern:true}, 
     error: { type: 'dateFile', filename: 'logs/error', "pattern":".log",alwaysIncludePattern:true}, 
     default: { type: 'dateFile', filename: 'logs/default', "pattern":".log",alwaysIncludePattern:true}, 
-    pushlog: {  filename: 'logs/EPPushLog', "pattern":".log",alwaysIncludePattern:true}, 
+    pushlog: { type:'console', filename: 'logs/EPPushLog', "pattern":".log",alwaysIncludePattern:true}, 
     rate: { type: 'dateFile', filename: 'logs/rate', "pattern":".log",alwaysIncludePattern:true} 
   },
   categories: {
