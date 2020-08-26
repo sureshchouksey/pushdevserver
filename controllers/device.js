@@ -333,10 +333,10 @@ exports.sendNotification = (req, res) => {
                 if (err) { return loggerinfo.error(err); }      
                 // Send a message to the devices corresponding to the provided
                 // registration tokens.  
-                loggerpush.info('OBJECT-->', obj)
                 loggerinfo.info(' Username-->',obj); 
-                userData.push(obj);   
-                obj.forEach((device,index)=>{          
+                obj.forEach((device,index)=>{   
+                  userData.push(device);   
+       
                     if(device.platform === 'Android'){
                         androidRegistrationTokens.push(device.registrationToken);
                     }
