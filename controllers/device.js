@@ -261,6 +261,7 @@ exports.sendNotification = (req, res) => {
 
   try{
     var resultListResponse = [];
+    var resultListResponseiOS = [];
 
     loggerpush.info('Start SendNotification Service');
     loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,Comments');
@@ -384,6 +385,7 @@ exports.sendNotification = (req, res) => {
                         var output = userData.filter(function(value){ return value.registrationToken==arrayFailed[i].device;})
                         loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",output[0].createdAt,",","failed,",arrayFailed[i].status,",",new Date(),",",arrayFailed[i].response);
                       }
+                      resultListResponseiOS.push(JSON.stringify(arrayFailed));
                       resultListResponse.push(result);
                           responseList.push(result);
                       });
@@ -439,7 +441,7 @@ exports.sendNotification = (req, res) => {
                               }
                               
                               resultList.push(result);
-                              console.log('resultList.push(result)',resultList);
+                              console.log('resultList.push(result)',resultListResponse);
 
                           }
                         })
@@ -454,10 +456,10 @@ exports.sendNotification = (req, res) => {
                   // var resultData = {              
                   //       "status":200,"message":'Successfully sent notification'
                   //     }
-                  console.log('RESULTLIST',resultList);
+                  console.log('RESULTLIST',resultList.length);
 
-                  console.log('RESULTLIST',responseList);
-                  res.status(400).json(responseList);
+                  console.log('ios result failed',resultListResponseiOS);
+                  res.status(400).json(resultListResponseiOS);
 
                 }
                   
