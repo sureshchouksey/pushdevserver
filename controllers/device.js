@@ -404,17 +404,18 @@ exports.sendNotification = (req, res) => {
 
                           loggerinfo.info('Android result-', item); 
 
-                          var output = userData.filter(function(value){ return value.registrationToken==androidRegistrationTokens[index];})
+                          var obj = userData.filter(function(value){ return value.registrationToken==androidRegistrationTokens[index];})
                           console.log('output android',output);
 
-                          //loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date());
+                          loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date());
 
                           if(item.hasOwnProperty('error')){
                               result = {
                                 "status" : 'error',
                                 "registrationToken" : androidRegistrationTokens[index]
                               }
-                              console.log('Error property',item.error);
+                              console.log('Error property',JSON.stringify(item.error));
+                              console.log('Error ',JSON.stringify(item.error).error);
 
                               Device.find({ registrationToken : androidRegistrationTokens[index]}, (err, obj) => {
                                 if (err) { return loggerinfo.error(err); }
