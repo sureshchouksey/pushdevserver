@@ -412,7 +412,7 @@ exports.sendNotification = (req, res) => {
                                 "status" : 'error',
                                 "registrationToken" : androidRegistrationTokens[index]
                               }
-                             loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date(),",",item_.error.errorInfo);
+                             loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date(),",",item_.error.errorInfo.message);
 
                               Device.find({ registrationToken : androidRegistrationTokens[index]}, (err, obj) => {
                                 if (err) { return loggerinfo.error(err); }
