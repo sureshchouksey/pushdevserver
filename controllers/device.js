@@ -257,7 +257,7 @@ exports.deleteByPlatform = (req, res) => {
 
 
 // Send message to multiple devices of multiple users with multiple notification in single Payload
-exports.sendNotification = async (req, res) => {
+exports.sendNotification = (req, res) => {
 
   try{
     var resultListResponse = [];
@@ -266,22 +266,20 @@ exports.sendNotification = async (req, res) => {
     loggerpush.info('Start SendNotification Service');
     loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,Comments');
 
-  loggerinfo.info('Start SendNotification Service');
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   if(token === config.token ){
-   
+  
         loggerinfo.info('Request body of sendNotification Service',req.body);
         var payLoadList = req.body;
         var responseList = [];
         var androidRegistrationTokens =[];
         var iosRegistrationTokens =[];
         var userData =[];
-
         var resultList = [];
         var isPackageNameValid = false;
         var apnProvider;
         
-        //FOR EACH ITEM IN NOTIFICATION REQUEST like packageName,username,notification please refer postman collection ch
+        //FETCHING EACH ITEM FROM NOTIFICATION REQUEST like packageName,username,notification
         payLoadList.forEach((item, index) => {
           if(item && item.hasOwnProperty('packageName') && item.hasOwnProperty('username') && item.hasOwnProperty('notification'))
           {
@@ -364,7 +362,7 @@ exports.sendNotification = async (req, res) => {
                 });
                  
                  //ACTUAL METHOD TO SEND PUSH MESSAGES FOR ALL TOKENS AS PER INDIVIDUAL USERNAME
-                  await  apnProvider.send(note, iosRegistrationTokens).then( (result) => {
+                  apnProvider.send(note, iosRegistrationTokens).then( (result) => {
                     
                     //APN RESPONSE RESULT RECEIVED
                       console.log('After sending message to apn');
@@ -374,7 +372,7 @@ exports.sendNotification = async (req, res) => {
                       var arrayFailed = jsonresult["failed"];
                       //SUCCESS ARRAY CREATION
                       var arraySent = jsonresult["sent"];
-                     //SENT ARRAY ITERATION 
+                     //SUCCESSFULLY SENT ARRAY ITERATION FOR LOGGING
                       for(var j =0;j<arraySent.length;j++){
                         var output = userData.filter(function(value){ return value.registrationToken==arraySent[j].device;})
                         loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",output[0].createdAt,",","Success",",",",",new Date());
@@ -385,6 +383,7 @@ exports.sendNotification = async (req, res) => {
                         var output = userData.filter(function(value){ return value.registrationToken==arrayFailed[i].device;})
                         loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",output[0].createdAt,",","failed,",arrayFailed[i].status,",",new Date(),",",arrayFailed[i].response);
                       }
+                      //NOT WORKING FUNCTIONALITY TO BE FIXED LATER FOR DISPLAYING PROPER RESPONSES
                       resultListResponseiOS.push(arrayFailed);
                       console.log('resultListResponseiOS',resultListResponseiOS);
                       resultListResponse.push(result);
@@ -392,28 +391,23 @@ exports.sendNotification = async (req, res) => {
                       });
                   }
                 }
- 
+                //ANDROID FCM SENDING NOTIFICATIONS
                 if(isPackageNameValid){
                   var result ={};
                 if(androidRegistrationTokens.length>=1){
-                  console.log('android part started');
-                 await adminApp.messaging().sendToDevice(androidRegistrationTokens, payload)
+                  adminApp.messaging().sendToDevice(androidRegistrationTokens, payload)
                     .then((response)=> {          
-                      // See the MessagingDevicesResponse reference documentation for
-                      // the contents of response.
-                      console.log('android reposnse',response);
+        
                       resultListResponse.push(response);
 
                       responseList.push(response);          
                       if (payLoadList.length == responseList.length) {
                         responseList[0].results.forEach((item_,index)=>{
                         
-                          loggerinfo.info('Android result-', item_); 
-
                           var obj = userData.filter(function(value){ return value.registrationToken==androidRegistrationTokens[index];})
                           console.log('output android',obj);
 
-                          loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date());
+                          loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","Success",",",",",new Date());
 
                           if(item.hasOwnProperty('error')){
                               result = {
@@ -449,19 +443,16 @@ exports.sendNotification = async (req, res) => {
                       }          
                     })
                     .catch((error)=> {
-                      //add username 
-                      loggerinfo.error("Error sending message:", error);
+                      //add username generic error f
+                      loggerinfo.error("Error sending message for:", req.username,error);
                     });
                   }
 
                   var resultData = {              
-                        "status":200,"message":'Successfully sent notification',
-                        "result":resultListResponseiOS
+                        "status":200,"message":'Successfully sent notification'
                       }
-                  console.log('RESULTLIST',resultList.length);
 
-                  console.log('ios result failed',JSON.stringify( resultListResponseiOS));
-                  res.status(400).json(resultData);
+                  res.status(200).json(resultData);
 
                 }
                   
