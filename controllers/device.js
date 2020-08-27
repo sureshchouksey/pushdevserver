@@ -399,20 +399,27 @@ exports.sendNotification = (req, res) => {
                     
                       responseList.push(response);          
                       if (payLoadList.length == responseList.length) {
-                        console.log('android if condition',payLoadList.length, responseList.length);
-
                         responseList[0].results.forEach((item,index)=>{
                           
+
                           loggerinfo.info('Android result-', item); 
-                          console.log('item',item);
+
+                          var output = userData.filter(function(value){ return value.registrationToken==androidRegistrationTokens[index];})
+                          console.log('output android',output);
+
+                          //loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date());
+
                           if(item.hasOwnProperty('error')){
                               result = {
                                 "status" : 'error',
                                 "registrationToken" : androidRegistrationTokens[index]
                               }
+                              console.log('Error property',item.error);
+
                               Device.find({ registrationToken : androidRegistrationTokens[index]}, (err, obj) => {
                                 if (err) { return loggerinfo.error(err); }
-                                loggerinfo.info("Search result of get Service", obj[0]);
+                                loggerinfo.info("Search result for deleting the token get Service", obj[0]);
+                                loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date());
                                 Device.remove({_id : mongoose.Types.ObjectId(obj[0]._id)}, (err, result) => {
                                   if(err){ return res.status(500).send(err)}                      
                                 });
