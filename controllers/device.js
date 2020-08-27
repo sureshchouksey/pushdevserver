@@ -459,7 +459,7 @@ exports.sendNotification = (req, res) => {
                   //     }
                   console.log('RESULTLIST',resultList.length);
 
-                  console.log('ios result failed',resultListResponseiOS);
+                  console.log('ios result failed',JSON.stringify(Object.assign({}, resultListResponseiOS)));
                   res.status(400).json(resultListResponseiOS);
 
                 }
