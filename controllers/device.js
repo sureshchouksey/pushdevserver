@@ -406,6 +406,7 @@ exports.sendNotification = (req, res) => {
                         
                           var obj = userData.filter(function(value){ return value.registrationToken==androidRegistrationTokens[index];})
                           console.log('output android',JSON.stringify(item_.error));
+                          console.log('output error',JSON.stringify(item_.error).Error);
 
                           loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","Success",",",",",new Date());
 
@@ -415,7 +416,7 @@ exports.sendNotification = (req, res) => {
                                 "registrationToken" : androidRegistrationTokens[index]
                               }
                               console.log('Error property',item_.error);
-                             loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date());
+                             loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date(),item_.error);
 
                               Device.find({ registrationToken : androidRegistrationTokens[index]}, (err, obj) => {
                                 if (err) { return loggerinfo.error(err); }
