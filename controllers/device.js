@@ -385,7 +385,8 @@ exports.sendNotification = (req, res) => {
                         var output = userData.filter(function(value){ return value.registrationToken==arrayFailed[i].device;})
                         loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",output[0].createdAt,",","failed,",arrayFailed[i].status,",",new Date(),",",arrayFailed[i].response);
                       }
-                      resultListResponseiOS.push(JSON.stringify(arrayFailed));
+                      resultListResponseiOS.push(arrayFailed);
+                      console.log('resultListResponseiOS',resultListResponseiOS);
                       resultListResponse.push(result);
                           responseList.push(result);
                       });
