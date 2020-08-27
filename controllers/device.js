@@ -433,13 +433,14 @@ exports.sendNotification = (req, res) => {
                                 "registrationToken" : androidRegistrationTokens[index]
                               }
                               resultList.push(result);
+                              console.log('resultList.push(result)',resultList);
+
                           }
                         })
                       }          
                     })
                     .catch((error)=> {
                       //add username 
-                      loggerpush.info("");
                       loggerinfo.error("Error sending message:", error);
                     });
                   }
