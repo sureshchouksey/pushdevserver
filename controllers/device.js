@@ -415,12 +415,11 @@ exports.sendNotification = (req, res) => {
                                 "registrationToken" : androidRegistrationTokens[index]
                               }
                               console.log('Error property',JSON.stringify(item_.error));
-                             // console.log('Error ',JSON.stringify(item.error).error);
+                             loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date());
 
                               Device.find({ registrationToken : androidRegistrationTokens[index]}, (err, obj) => {
                                 if (err) { return loggerinfo.error(err); }
                                 loggerinfo.info("Search result for deleting the token get Service", obj[0]);
-                                loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date());
                                 // code to delete the bad token from the database adding condition for error codes 400, 410
                                 // Device.remove({_id : mongoose.Types.ObjectId(obj[0]._id)}, (err, result) => {
                                 //   if(err){ return res.status(500).send(err)}                      
@@ -436,7 +435,6 @@ exports.sendNotification = (req, res) => {
                               }
                               
                               resultList.push(result);
-                              console.log('resultList.push(result)',resultListResponse);
 
                           }
                         })
@@ -447,7 +445,7 @@ exports.sendNotification = (req, res) => {
                       loggerinfo.error("Error sending message for:", req.username,error);
                     });
                   }
-
+                  //need to analyze to send the actual response after processing all above push notifictaions
                   var resultData = {              
                         "status":200,"message":'Successfully sent notification'
                       }
