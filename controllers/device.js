@@ -260,6 +260,8 @@ exports.deleteByPlatform = (req, res) => {
 exports.sendNotification = (req, res) => {
 
   try{
+    var resultListResponse = [];
+
     loggerpush.info('Start SendNotification Service');
     loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,Comments');
 
@@ -382,6 +384,7 @@ exports.sendNotification = (req, res) => {
                         var output = userData.filter(function(value){ return value.registrationToken==arrayFailed[i].device;})
                         loggerpush.info(",",output[0].username,",",output[0].deviceId,",",output[0].phoneModel,",",output[0].appversion,",",output[0].version,",",output[0].registrationToken,",",item.notification.body,",",item.notification.title,",",output[0].createdAt,",","failed,",arrayFailed[i].status,",",new Date(),",",arrayFailed[i].response);
                       }
+                      resultListResponse.push(result);
                           responseList.push(result);
                       });
                   }
@@ -396,7 +399,8 @@ exports.sendNotification = (req, res) => {
                       // See the MessagingDevicesResponse reference documentation for
                       // the contents of response.
                       console.log('android reposnse',response);
-                    
+                      resultListResponse.push(response);
+
                       responseList.push(response);          
                       if (payLoadList.length == responseList.length) {
                         responseList[0].results.forEach((item_,index)=>{
@@ -425,6 +429,7 @@ exports.sendNotification = (req, res) => {
                                 //   if(err){ return res.status(500).send(err)}                      
                                 // });
                               });
+
                               resultList.push(result);
                           }
                           else{
@@ -432,6 +437,7 @@ exports.sendNotification = (req, res) => {
                                 "status" : 'success',
                                 "registrationToken" : androidRegistrationTokens[index]
                               }
+                              
                               resultList.push(result);
                               console.log('resultList.push(result)',resultList);
 
