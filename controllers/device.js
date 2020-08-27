@@ -405,16 +405,16 @@ exports.sendNotification = (req, res) => {
                         responseList[0].results.forEach((item_,index)=>{
                         
                           var obj = userData.filter(function(value){ return value.registrationToken==androidRegistrationTokens[index];})
-                          console.log('output android',obj);
+                          console.log('output android',JSON.stringify(item_.error));
 
                           loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","Success",",",",",new Date());
 
-                          if(item.hasOwnProperty('error')){
+                          if(item_.hasOwnProperty('error')){
                               result = {
                                 "status" : 'error',
                                 "registrationToken" : androidRegistrationTokens[index]
                               }
-                              console.log('Error property',JSON.stringify(item_.error));
+                              console.log('Error property',item_.error);
                              loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date());
 
                               Device.find({ registrationToken : androidRegistrationTokens[index]}, (err, obj) => {
