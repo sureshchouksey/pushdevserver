@@ -439,7 +439,8 @@ exports.sendNotification = (req, res) => {
                   // var resultData = {              
                   //       "status":200,"message":'Successfully sent notification'
                   //     }
-                  res.status(400).json(resultList);
+                  console.log('RESULTLIST',resultList);
+                  res.status(400).Object(resultList);
 
                 }
                   
