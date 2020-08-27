@@ -399,7 +399,8 @@ exports.sendNotification = (req, res) => {
                     
                       responseList.push(response);          
                       if (payLoadList.length == responseList.length) {
-                        
+                        console.log('android if condition',payLoadList.length, responseList.length);
+
                         responseList[0].results.forEach((item,index)=>{
                           
                           loggerinfo.info('Android result-', item); 
