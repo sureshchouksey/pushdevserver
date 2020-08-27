@@ -257,7 +257,7 @@ exports.deleteByPlatform = (req, res) => {
 
 
 // Send message to multiple devices of multiple users with multiple notification in single Payload
-exports.sendNotification = async(req, res) => {
+exports.sendNotification = async (req, res) => {
 
   try{
     var resultListResponse = [];
