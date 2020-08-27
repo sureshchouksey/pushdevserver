@@ -386,15 +386,9 @@ exports.sendNotification = (req, res) => {
                       });
                   }
                 }
-                
-
-
-
-
-
-
+ 
                 if(isPackageNameValid){
-
+                  var result ={};
                 if(androidRegistrationTokens.length>=1){
                   adminApp.messaging().sendToDevice(androidRegistrationTokens, payload)
                     .then((response)=> {          
@@ -404,7 +398,7 @@ exports.sendNotification = (req, res) => {
                       if (payLoadList.length == responseList.length) {
                         
                         responseList[0].results.forEach((item,index)=>{
-                          var result ={};
+                          
                           loggerinfo.info('Android result-', item); 
                           console.log('item',item);
                           if(item.hasOwnProperty('error')){
@@ -433,14 +427,15 @@ exports.sendNotification = (req, res) => {
                     })
                     .catch((error)=> {
                       //add username 
+                      loggerpush.info("");
                       loggerinfo.error("Error sending message:", error);
                     });
                   }
 
-                  var resultData = {              
-                        "status":200,"message":'Successfully sent notification'
-                      }
-                  res.status(200).json(resultData);
+                  // var resultData = {              
+                  //       "status":200,"message":'Successfully sent notification'
+                  //     }
+                  res.status(400).json(result);
 
                 }
                   
