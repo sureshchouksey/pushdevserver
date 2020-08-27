@@ -404,7 +404,7 @@ exports.sendNotification = (req, res) => {
                           loggerinfo.info('Android result-', item); 
 
                           var obj = userData.filter(function(value){ return value.registrationToken==androidRegistrationTokens[index];})
-                          console.log('output android',output);
+                          console.log('output android',obj);
 
                           loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","failed",",",",",new Date());
 
