@@ -415,7 +415,7 @@ exports.sendNotification = (req, res) => {
                                 "registrationToken" : androidRegistrationTokens[index]
                               }
                               console.log('Error property',JSON.stringify(item.error));
-                              console.log('Error ',JSON.stringify(item.error).error);
+                             // console.log('Error ',JSON.stringify(item.error).error);
 
                               Device.find({ registrationToken : androidRegistrationTokens[index]}, (err, obj) => {
                                 if (err) { return loggerinfo.error(err); }
