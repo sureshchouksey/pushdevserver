@@ -257,7 +257,7 @@ exports.deleteByPlatform = (req, res) => {
 
 
 // Send message to multiple devices of multiple users with multiple notification in single Payload
-exports.sendNotification = (req, res) => {
+exports.sendNotification = async(req, res) => {
 
   try{
     var resultListResponse = [];
@@ -364,7 +364,7 @@ exports.sendNotification = (req, res) => {
                 });
                  
                  //ACTUAL METHOD TO SEND PUSH MESSAGES FOR ALL TOKENS AS PER INDIVIDUAL USERNAME
-                    apnProvider.send(note, iosRegistrationTokens).then( (result) => {
+                  await  apnProvider.send(note, iosRegistrationTokens).then( (result) => {
                     
                     //APN RESPONSE RESULT RECEIVED
                       console.log('After sending message to apn');
@@ -397,7 +397,7 @@ exports.sendNotification = (req, res) => {
                   var result ={};
                 if(androidRegistrationTokens.length>=1){
                   console.log('android part started');
-                  adminApp.messaging().sendToDevice(androidRegistrationTokens, payload)
+                 await adminApp.messaging().sendToDevice(androidRegistrationTokens, payload)
                     .then((response)=> {          
                       // See the MessagingDevicesResponse reference documentation for
                       // the contents of response.
@@ -454,13 +454,14 @@ exports.sendNotification = (req, res) => {
                     });
                   }
 
-                  // var resultData = {              
-                  //       "status":200,"message":'Successfully sent notification'
-                  //     }
+                  var resultData = {              
+                        "status":200,"message":'Successfully sent notification',
+                        "result":resultListResponseiOS
+                      }
                   console.log('RESULTLIST',resultList.length);
 
                   console.log('ios result failed',JSON.stringify( resultListResponseiOS));
-                  res.status(400).json(JSON.stringify( resultListResponseiOS));
+                  res.status(400).json(resultData);
 
                 }
                   
