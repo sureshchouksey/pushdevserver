@@ -390,10 +390,13 @@ exports.sendNotification = (req, res) => {
                 if(isPackageNameValid){
                   var result ={};
                 if(androidRegistrationTokens.length>=1){
+                  console.log('android part started');
                   adminApp.messaging().sendToDevice(androidRegistrationTokens, payload)
                     .then((response)=> {          
                       // See the MessagingDevicesResponse reference documentation for
-                      // the contents of response.                    
+                      // the contents of response.
+                      console.log('android reposnse',response);
+                    
                       responseList.push(response);          
                       if (payLoadList.length == responseList.length) {
                         
@@ -435,7 +438,7 @@ exports.sendNotification = (req, res) => {
                   // var resultData = {              
                   //       "status":200,"message":'Successfully sent notification'
                   //     }
-                  res.status(400).json(result);
+                  res.status(400).json(resultList);
 
                 }
                   
