@@ -265,7 +265,7 @@ exports.sendNotification = async(req, res) => {
 
     loggerpush.info('Start SendNotification Service');
     loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,Comments');
-    await sendApnNotification();
+    await sendApnNotification(req);
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   if(token === config.token ){
   
@@ -473,9 +473,9 @@ exports.sendNotification = async(req, res) => {
 
 }
 
-async function sendApnNotification() {
+async function sendApnNotification(req) {
   setTimeout(() => {}, 100, "foo");
-  loggerpush.info('sendApnNotification Service');
+  loggerpush.info('sendApnNotification Service',req);
 
 }
 
