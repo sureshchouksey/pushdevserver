@@ -82,7 +82,6 @@ var MearsDevConnectAdminApp = admin.initializeApp({
 // Get all data for loggedIn user
 exports.getAll = (req, res) => {
   try{
-    loggerinfo.task('TEST--->',req);
     loggerinfo.info('Start Get Device Service');
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if(token === config.token){
@@ -354,11 +353,10 @@ exports.sendNotification = (req, res) => {
                        "attachment-url":apnURL
                       },
                 alert:item.notification.title,
-                priority:5,
+                priority:10,
                 host:"api.push.apple.com:443",
                 sound:"ping.aiff",
-                topic:item.packageName,
-                contentAvailable: 1
+                topic:item.packageName
                 });
                  
                  //ACTUAL METHOD TO SEND PUSH MESSAGES FOR ALL TOKENS AS PER INDIVIDUAL USERNAME
