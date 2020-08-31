@@ -354,7 +354,7 @@ exports.sendNotification = (req, res) => {
                       },
                 alert:item.notification.title,
                 priority:10,
-                expiration:(Math.floor(Date.now() / 1000) + 172800).toString(),
+                expiry:(Math.floor(Date.now() / 1000) + 172800),
                 sound:"ping.aiff",
                 topic:item.packageName
                 });
