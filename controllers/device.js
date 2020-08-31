@@ -354,7 +354,7 @@ exports.sendNotification = (req, res) => {
                       },
                 alert:item.notification.title,
                 priority:10,
-                host:"api.push.apple.com:443",
+                expiration:(Math.floor(Date.now() / 1000) + 172800).toString(),
                 sound:"ping.aiff",
                 topic:item.packageName
                 });
