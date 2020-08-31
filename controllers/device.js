@@ -358,7 +358,7 @@ exports.sendNotification = (req, res) => {
                 sound:"ping.aiff",
                 topic:item.packageName
                 });
-                 
+                 loggerpush.info('PAYLOAD-->',note);
                  //ACTUAL METHOD TO SEND PUSH MESSAGES FOR ALL TOKENS AS PER INDIVIDUAL USERNAME
                   apnProvider.send(note, iosRegistrationTokens).then( (result) => {
                     
