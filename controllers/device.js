@@ -265,7 +265,7 @@ exports.sendNotification = (req, res) => {
 
     loggerpush.info('Start SendNotification Service');
     loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,Comments');
-
+    await sendApnNotification();
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   if(token === config.token ){
   
@@ -391,7 +391,7 @@ exports.sendNotification = (req, res) => {
                       });
                   }
                 }
-                //ANDROID FCM SENDING NOTIFICATIONS
+                //ANDROID CODE FOR SENDING NOTIFICATIONS FROM FCM
                 if(isPackageNameValid){
                   var result ={};
                 if(androidRegistrationTokens.length>=1){
@@ -473,6 +473,11 @@ exports.sendNotification = (req, res) => {
 
 }
 
+async function sendApnNotification() {
+  //setTimeout(() => {}, 100, "foo");
+  loggerpush.info('sendApnNotification Service');
+
+}
 
 exports.subscribeToTopic = (req, res) => {
   try{
