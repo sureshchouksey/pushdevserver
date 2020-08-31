@@ -257,7 +257,7 @@ exports.deleteByPlatform = (req, res) => {
 
 
 // Send message to multiple devices of multiple users with multiple notification in single Payload
-exports.sendNotification = (req, res) => {
+exports.sendNotification = async(req, res) => {
 
   try{
     var resultListResponse = [];
@@ -474,7 +474,7 @@ exports.sendNotification = (req, res) => {
 }
 
 async function sendApnNotification() {
-  //setTimeout(() => {}, 100, "foo");
+  setTimeout(() => {}, 100, "foo");
   loggerpush.info('sendApnNotification Service');
 
 }
