@@ -257,15 +257,7 @@ exports.deleteByPlatform = (req, res) => {
 
 
 // Send message to multiple devices of multiple users with multiple notification in single Payload
-exports.sendNotification = async(req, res) => {
-  var list =  await sendApnNotification(req,res);
-
-  loggerinfo.info('End SendNotification Service',list);
-
-}
-
-async function sendApnNotification(req,res) {
-  setTimeout(() => {}, 100, "foo");
+exports.sendNotification = (req, res) => {
 
   try{
     var resultListResponse = [];
@@ -273,8 +265,9 @@ async function sendApnNotification(req,res) {
 
     loggerpush.info('Start SendNotification Service');
     loggerpush.info(',Username,deviceID,phoneModel,appVersion,iOSVersion,registrationToken,NotificationBody,NotificationTitle,createdDate,result,resultCode,ApnHitDateTime,errorMessage,Comments');
-        var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    if(token === config.token ){
+    
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  if(token === config.token ){
   
         loggerinfo.info('Request body of sendNotification Service',req.body);
         var payLoadList = req.body;
@@ -326,13 +319,25 @@ async function sendApnNotification(req,res) {
                 
                 var adminApp ={};
 
-                if(item.packageName === opusConstant.opusConstant.epmodPackageNameProd){
+                if(item.packageName === opusConstant.opusConstant.wpoPackageNameProd){
+                  adminApp = WorkplaceAdminApp;
+                  apnProvider = new apn.Provider(opusConstant.opusConstant.options);
+                  isPackageNameValid = true;
+                } else if(item.packageName === opusConstant.opusConstant.epmodPackageNameProd){
                   apnProvider = new apn.Provider(opusConstant.opusConstant.optionEpConnect);                                    
                   adminApp = EpWorkplaceAdminApp;
                   isPackageNameValid = true;
                 } else if(item.packageName === opusConstant.opusConstant.epmodPackageNameDev){
                   apnProvider = new apn.Provider(opusConstant.opusConstant.options);
                   adminApp = epModeConnectAdminApp;
+                  isPackageNameValid = true;
+                } else if(item.packageName === opusConstant.opusConstant.mcConnectPackageNameProd){
+                  adminApp = MearsConnectAdminApp;
+                  apnProvider = new apn.Provider(opusConstant.opusConstant.optionsMearsConnect);
+                  isPackageNameValid = true;
+                } else if(item.packageName === opusConstant.opusConstant.mcConnectPackageNameDev){
+                  adminApp = MearsDevConnectAdminApp;
+                  apnProvider = new apn.Provider(opusConstant.opusConstant.optionsMearsConnect);
                   isPackageNameValid = true;
                 } else{
                   isPackageNameValid = false;
@@ -464,7 +469,12 @@ async function sendApnNotification(req,res) {
     loggerinfo.error('Send Notification Service: Internal server error.');
     res.status(500).json({status:500,message:'Internal server error'});
   }
-  return resultList;
+  loggerinfo.info('End SendNotification Service');
+
+}
+
+async function sendApnNotification() {
+  //setTimeout(() => {}, 100, "foo");
 }
 
 exports.subscribeToTopic = (req, res) => {

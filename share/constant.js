@@ -47,7 +47,7 @@ module.exports.opusConstant = Object.freeze({
         //   host: "gateway.push.apple.com",
         //   port: 2195
         // },
-        //gateway: 'gateway.push.apple.com:2195',
+        gateway: 'gateway.push.apple.com:2195',
         production: true
       },
       serviceAccountPath : "../pushConfig/opus-neo-firebase-adminsdk-c65n3-a3f2c53c2f.json",
