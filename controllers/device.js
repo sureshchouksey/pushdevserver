@@ -260,7 +260,7 @@ exports.deleteByPlatform = (req, res) => {
 exports.sendNotification = async(req, res) => {
   var list =  await sendApnNotification(req,res);
 
-  loggerinfo.info('End SendNotification Service');
+  loggerinfo.info('End SendNotification Service',list);
 
 }
 
