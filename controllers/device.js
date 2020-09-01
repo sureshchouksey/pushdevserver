@@ -350,11 +350,12 @@ exports.sendNotification = (req, res) => {
                     let note = new apn.Notification({
                       payload:{
                        "messageFrom":item.notification.body,
-                       "attachment-url":apnURL
+                       "attachment-url":apnURL,
+                       "timeStamp":Date.now(),
                       },
                 alert:item.notification.title,
                 priority:10,
-                expiry:(Math.floor(Date.now() / 1000) + 172800),
+                expiry:Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 28),
                 sound:"ping.aiff",
                 topic:item.packageName
                 });
