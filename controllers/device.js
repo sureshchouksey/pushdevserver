@@ -353,7 +353,7 @@ exports.sendNotification = (req, res) => {
                        "attachment-url":apnURL,
                        "timeStamp":Date.now(),
                       },
-               // alert:item.notification.title,
+                alert:item.notification.title,
                 priority:5,
                 expiry:Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 28),
                 //sound:"ping.aiff",
