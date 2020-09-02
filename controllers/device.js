@@ -357,6 +357,7 @@ exports.sendNotification = (req, res) => {
                 priority:10,
                 expiry:Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 28),
                 sound:"ping.aiff",
+                contentAvailable: 1,
                 topic:item.packageName
                 });
                  loggerpush.info('PAYLOAD-->',note);
