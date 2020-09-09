@@ -476,9 +476,6 @@ exports.sendNotification = (req, res) => {
 
 }
 
-async function sendApnNotification() {
-  //setTimeout(() => {}, 100, "foo");
-}
 
 exports.subscribeToTopic = (req, res) => {
   try{
