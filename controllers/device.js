@@ -405,7 +405,9 @@ exports.sendNotification = (req, res) => {
                         responseList[0].results.forEach((item_,index)=>{
                         
                           var obj = userData.filter(function(value){ return value.registrationToken==androidRegistrationTokens[index];})
-                          loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","Success",",",",",new Date());
+                          loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",","",",","",",","",",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","Success",",",",",new Date());
+
+                          //loggerpush.info(",",obj[0].username,",",obj[0].deviceId,",",obj[0].phoneModel,",",obj[0].appversion,",",obj[0].version,",",obj[0].registrationToken,",",item.notification.body,",",item.notification.title,",",obj[0].createdAt,",","Success",",",",",new Date());
 
                           if(item_.hasOwnProperty('error')){
                               result = {
